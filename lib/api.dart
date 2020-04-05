@@ -14,19 +14,6 @@ class Api {
 
   Api._internal() {}
 
-  //keep around as reference of how to read from a file
-//  Future<List<Meetup>> fetchMeetups(BuildContext context) async {
-//    String jsonString = await DefaultAssetBundle.of(context)
-//        .loadString('assets/data/meetups.json');
-//
-//    var meetupsJson = jsonDecode(jsonString)["meetups"] as List;
-//
-//    List<Meetup> meetups =
-//    meetupsJson.map((meetupsJson) => Meetup.fromJson(meetupsJson)).toList();
-//
-//    return meetups;
-//  }
-
   Future<AggregatedDataModel> fetchData() async {
     final response = await http
         .get('https://us-central1-dc-dev-community.cloudfunctions.net/events');
