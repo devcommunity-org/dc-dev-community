@@ -21,9 +21,7 @@ class Api {
 
     List<Meetup> meetups =
         meetupsJson.map((meetupsJson) => Meetup.fromJson(meetupsJson)).toList();
-
-    print("loading meetups from file"); //TODO: this should only fire once - as of now, it fires every time we resize screen on web....
-
+    
     return meetups;
   }
 }
