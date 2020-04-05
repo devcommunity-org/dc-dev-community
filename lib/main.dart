@@ -42,6 +42,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Meetup> meetups = [];
+  final AsyncMemoizer _memoizer = AsyncMemoizer();
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
       body: SingleChildScrollView(
-          child: FutureBuilder<List<Meetup>>(
-              future: Api().fetchMeetups(context),
+          child: FutureBuilder(
+              future: _fetchMeetups(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   meetups = snapshot.data;
@@ -128,7 +129,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  List<Widget> fetchUpcomingMeetups() {
+  _fetchMeetups() {
+    return this._memoizer.runOnce(() async { //we only want to fetch meetups once - this ensures that if page is resized, data isn't loaded again
+      return await Api().fetchMeetups(context);
+    });
+  }
+
+  List<Widget> fetchUpcomingMeetupEvents() {
     return [
       Text("TODO"),
       Text("This will be driven by Firebase")
@@ -212,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Text(MyLocalizations.of(context).getString("upcomingMeetups"),
               style: TextStyle(fontSize: 30.0)),
-          ...fetchUpcomingMeetups()
+          ...fetchUpcomingMeetupEvents()
         ],
       ),
     );
