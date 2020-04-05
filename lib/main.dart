@@ -1,5 +1,8 @@
 import 'package:async/async.dart';
+import 'package:dc_community_app/AggregatedDataModel.dart';
 import 'package:dc_community_app/localization.dart';
+import 'package:dc_community_app/meetup.dart';
+import 'package:dc_community_app/meetup_event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,7 +11,6 @@ import 'package:universal_html/html.dart' as html;
 
 import 'api.dart';
 import 'custom_cursor.dart';
-import 'meetup.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,8 +43,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Meetup> meetups = [];
   final AsyncMemoizer _memoizer = AsyncMemoizer();
+  AggregatedDataModel dataModel;
+
+  @override
+  void initState() {
+    List<Meetup> meetups = [];
+    List<MeetupEvent> meetupEvents = [];
+    dataModel =
+        AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
       body: SingleChildScrollView(
           child: FutureBuilder(
-              future: _fetchMeetups(),
+              future: _fetchData(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  meetups = snapshot.data;
+                  if (snapshot.data != null) {
+                    dataModel = snapshot.data;
+                  }
 
                   return Center(
                       child: Padding(
@@ -129,17 +143,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _fetchMeetups() {
-    return this._memoizer.runOnce(() async { //we only want to fetch meetups once - this ensures that if page is resized, data isn't loaded again
-      return await Api().fetchMeetups(context);
+  _fetchData() {
+    return this._memoizer.runOnce(() async {
+      //we only want to fetch API data once - this ensures that if page is resized, data isn't loaded again
+      return await Api().fetchData();
     });
-  }
-
-  List<Widget> fetchUpcomingMeetupEvents() {
-    return [
-      Text("TODO"),
-      Text("This will be driven by Firebase")
-    ]; //TODO: build this out using Firebase functions and Meetup API
   }
 
   Widget mobileOrDesktop() {
@@ -219,7 +227,14 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Text(MyLocalizations.of(context).getString("upcomingMeetups"),
               style: TextStyle(fontSize: 30.0)),
-          ...fetchUpcomingMeetupEvents()
+          Container(
+            height: 44.0,
+            child: ListView.builder(
+                itemCount: dataModel.meetupEvents.length,
+                itemBuilder: (context, index) {
+                  return Text(dataModel.meetupEvents[index].title);
+                }),
+          )
         ],
       ),
     );
@@ -233,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
         : Column(
             mainAxisAlignment: MainAxisAlignment.center, children: children);
 
-    meetups.forEach((meetup) {
+    dataModel.meetups.forEach((meetup) {
       children.add(SizedBox(height: 10, width: 10));
       children.add(FlatButton(
           onPressed: () => _openLink(meetup.url),
