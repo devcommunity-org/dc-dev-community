@@ -3,9 +3,11 @@ import 'package:dc_community_app/AggregatedDataModel.dart';
 import 'package:dc_community_app/localization.dart';
 import 'package:dc_community_app/meetup.dart';
 import 'package:dc_community_app/meetup_event.dart';
+import 'package:dc_community_app/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -19,9 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: "Open Sans"),
       onGenerateTitle: (BuildContext context) =>
           MyLocalizations.of(context).getString("pageTitle"),
       localizationsDelegates: [
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var sectionNames = [
-      MyLocalizations.of(context).getString("aboutUs"),
+      //MyLocalizations.of(context).getString("aboutUs"), //TODO: build this
       MyLocalizations.of(context).getString("volunteerToSpeak")
     ];
 
@@ -70,18 +70,13 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: isDesktop()
             ? <Widget>[
                 MaterialButton(
-                  child: Text(
-                    sectionNames[0],
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: _showDialog,
-                ),
-                MaterialButton(
                     child: Text(
-                      sectionNames[1],
+                      sectionNames[0],
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: _showDialog),
+                    onPressed: () {
+                      _openLink(linkForSection(0));
+                    }),
               ]
             : null,
       ),
@@ -103,15 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ListTile(
                     title: Text(sectionNames[0]),
                     onTap: () {
-                      _showDialog();
+                      _openLink(linkForSection(0));
                     },
-                  ),
-                  ListTile(
-                    title: Text(sectionNames[1]),
-                    onTap: () {
-                      _showDialog();
-                    },
-                  ),
+                  )
                 ],
               ),
             ),
@@ -135,12 +124,27 @@ class _MyHomePageState extends State<MyHomePage> {
               })),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          _showDialog();
+          _openLink(linkForSection(0));
         },
         icon: Icon(Icons.record_voice_over),
         label: Text(MyLocalizations.of(context).getString("volunteerToSpeak")),
       ),
     );
+  }
+
+  String linkForSection(int sectionNum) {
+    switch (sectionNum) {
+      case 0:
+        {
+          return "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform?usp=sf_link";
+        }
+        break;
+
+      default:
+        {
+          return null;
+        }
+    }
   }
 
   _fetchData() {
@@ -194,7 +198,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     cursorStyle: CustomCursor.text,
                                     child: SelectableText(
                                         MyLocalizations.of(context)
-                                            .getString("homeBodyText"))),
+                                            .getString("homeBodyText"),
+                                        style: TextStyle(fontSize: 25.0))),
                               )
                             ],
                           ),
@@ -208,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(width: 20),
             Expanded(
               child: Container(
-                constraints: BoxConstraints(maxHeight: 700),
+                constraints: BoxConstraints(maxHeight: 500),
                 child: upcomingMeetupsWidget(),
               ),
             ),
@@ -221,21 +226,69 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget upcomingMeetupsWidget() {
     return Container(
-      color: Colors.grey,
+      decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: new BorderRadius.all(Radius.circular(10.0))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(MyLocalizations.of(context).getString("upcomingMeetups"),
-              style: TextStyle(fontSize: 30.0)),
-          Container(
-            height: 44.0,
-            child: ListView.builder(
-                itemCount: dataModel.meetupEvents.length,
-                itemBuilder: (context, index) {
-                  return Text(dataModel.meetupEvents[index].title);
-                }),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+            child: Text(
+                MyLocalizations.of(context).getString("upcomingMeetups"),
+                style: TextStyle(fontSize: 30.0)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Container(
+              height: dataModel.meetupEvents.length * 165.0,
+              child: ListView.builder(
+                  itemCount: dataModel.meetupEvents.length,
+                  itemBuilder: (context, index) {
+                    return generateMeetupEventCard(
+                        dataModel.meetupEvents[index]);
+                  }),
+            ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget generateMeetupEventCard(MeetupEvent meetupEvent) {
+    return Center(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.event),
+              title: Text(meetupEvent.title),
+              subtitle: Text(
+                  DateFormat("yMMMMEEEEd").add_jm().format(meetupEvent.date)),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: roundedMeetupLogo(
+                      Utils().imageFromMeetupKey(meetupEvent.meetup), 50.0),
+                ),
+                ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: const Text('DETAILS'),
+                      onPressed: () {
+                        _openLink(meetupEvent.url);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -252,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children.add(SizedBox(height: 10, width: 10));
       children.add(FlatButton(
           onPressed: () => _openLink(meetup.url),
-          child: roundedMeetupLogo(meetup.logoUrl)));
+          child: roundedMeetupLogo(meetup.logoUrl, 190.0)));
       children.add(SizedBox(height: 10, width: 10));
     });
 
@@ -272,15 +325,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Widget roundedMeetupLogo(String fileName) {
-    //TODO: migrate logo files to Firebase Storage URLs
-    return roundedImage("assets/images/meetup_logos/" + fileName);
+  Widget roundedMeetupLogo(String fileName, double widthHeight) {
+    return roundedImage("assets/images/meetup_logos/" + fileName, widthHeight);
   }
 
-  Widget roundedImage(String fileName) {
+  Widget roundedImage(String fileName, double widthHeight) {
     return Container(
-        width: 190.0,
-        height: 190.0,
+        width: widthHeight,
+        height: widthHeight,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: new Border.all(
@@ -295,7 +347,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Image(
             image: AssetImage('assets/images/entrance-narrow.jpg'),
             fit: BoxFit.cover),
-        SelectableText(MyLocalizations.of(context).getString("homeBodyText")),
+        SelectableText(MyLocalizations.of(context).getString("homeBodyText"),
+            style: TextStyle(fontSize: 20.0)),
         Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: upcomingMeetupsWidget(),

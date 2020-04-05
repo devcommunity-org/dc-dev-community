@@ -12,7 +12,7 @@ class Api {
     return _singleton;
   }
 
-  Api._internal() {}
+  Api._internal();
 
   Future<AggregatedDataModel> fetchData() async {
     final response = await http

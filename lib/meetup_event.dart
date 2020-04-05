@@ -4,7 +4,7 @@ class MeetupEvent {
   final String title;
   final String description;
   final String location;
-  final String date;
+  final DateTime date;
 
   MeetupEvent({this.meetup, this.url, this.title, this.description, this.location, this.date});
 
@@ -15,6 +15,6 @@ class MeetupEvent {
         title: json['title'] as String,
         description: json['description'] as String,
         location: json["location"] as String,
-        date: json["date"] as String);
+        date: DateTime.parse(json["date"] as String));
   }
 }
