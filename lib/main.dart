@@ -3,6 +3,7 @@ import 'package:dc_community_app/AggregatedDataModel.dart';
 import 'package:dc_community_app/localization.dart';
 import 'package:dc_community_app/meetup.dart';
 import 'package:dc_community_app/meetup_event.dart';
+import 'package:dc_community_app/meetup_event_video.dart';
 import 'package:dc_community_app/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -220,7 +221,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      logosWidget()
+      logosWidget(),
+      featuredVideoWidget()
     ]);
   }
 
@@ -247,6 +249,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemBuilder: (context, index) {
                     return generateMeetupEventCard(
                         dataModel.meetupEvents[index]);
+                  }),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget featuredVideoWidget() {
+    return Container(
+      width: 600.0,
+      decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: new BorderRadius.all(Radius.circular(10.0))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+            child: Text(MyLocalizations.of(context).getString("featuredVideo"),
+                style: TextStyle(fontSize: 30.0)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Container(
+              height: dataModel.meetupEventVideos.length * 475.0,
+              child: ListView.builder(
+                  itemCount: dataModel.meetupEventVideos.length,
+                  itemBuilder: (context, index) {
+                    return generateVideoCard(
+                        dataModel.meetupEventVideos[index]);
                   }),
             ),
           )
@@ -286,6 +319,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget generateVideoCard(MeetupEventVideo meetupEventVideo) {
+    return Center(
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.event),
+              title: Text(meetupEventVideo.title),
+              subtitle:
+                  Text(DateFormat("yMMMMEEEEd").format(meetupEventVideo.date)),
+              trailing: FlatButton(
+                child: const Text(
+                  'WATCH',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () {
+                  _openLink(meetupEventVideo.url);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Image.network(meetupEventVideo.thumbnailUrl),
             ),
           ],
         ),
@@ -354,11 +417,12 @@ class _MyHomePageState extends State<MyHomePage> {
           child: upcomingMeetupsWidget(),
         ),
         logosWidget(),
+        featuredVideoWidget()
       ],
     );
   }
 
-  void _showDialog() {
+  void _showDialog() { //generic function to let user know that something isn't yet complete
     showDialog(
       context: context,
       builder: (BuildContext context) {
