@@ -213,15 +213,30 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(width: 20),
             Expanded(
-              child: Container(
-                constraints: BoxConstraints(maxHeight: 500),
-                child: upcomingMeetupsWidget(),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                        MyLocalizations.of(context).getString("upcomingMeetups"),
+                        style: TextStyle(fontSize: 30.0)),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(maxHeight: 500),
+                    child: upcomingMeetupsWidget(),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
       logosWidget(),
+      Padding(
+        padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+        child: Text(MyLocalizations.of(context).getString("featuredVideo"),
+            style: TextStyle(fontSize: 30.0)),
+      ),
       featuredVideoWidget()
     ]);
   }
@@ -231,28 +246,17 @@ class _MyHomePageState extends State<MyHomePage> {
       decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: new BorderRadius.all(Radius.circular(10.0))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-            child: Text(
-                MyLocalizations.of(context).getString("upcomingMeetups"),
-                style: TextStyle(fontSize: 30.0)),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Container(
-              height: dataModel.meetupEvents.length * 165.0,
-              child: ListView.builder(
-                  itemCount: dataModel.meetupEvents.length,
-                  itemBuilder: (context, index) {
-                    return generateMeetupEventCard(
-                        dataModel.meetupEvents[index]);
-                  }),
-            ),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+        child: Container(
+          height: dataModel.meetupEvents.length * 165.0,
+          child: ListView.builder(
+              itemCount: dataModel.meetupEvents.length,
+              itemBuilder: (context, index) {
+                return generateMeetupEventCard(
+                    dataModel.meetupEvents[index]);
+              }),
+        ),
       ),
     );
   }
@@ -266,11 +270,6 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-            child: Text(MyLocalizations.of(context).getString("featuredVideo"),
-                style: TextStyle(fontSize: 30.0)),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: Container(
@@ -413,10 +412,21 @@ class _MyHomePageState extends State<MyHomePage> {
         SelectableText(MyLocalizations.of(context).getString("homeBodyText"),
             style: TextStyle(fontSize: 20.0)),
         Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Text(
+              MyLocalizations.of(context).getString("upcomingMeetups"),
+              style: TextStyle(fontSize: 30.0)),
+        ),
+        Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: upcomingMeetupsWidget(),
         ),
         logosWidget(),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+          child: Text(MyLocalizations.of(context).getString("featuredVideo"),
+              style: TextStyle(fontSize: 30.0)),
+        ),
         featuredVideoWidget()
       ],
     );

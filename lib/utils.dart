@@ -37,7 +37,7 @@ class Utils {
           return "dc-android.jpg";
         }
         break;
-      case "/DC-iOS":
+      case "DC-iOS":
         {
           return "dc-ios.jpg";
         }
