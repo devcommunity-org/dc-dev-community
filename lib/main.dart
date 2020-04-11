@@ -273,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: Container(
-              height: dataModel.meetupEventVideos.length * 475.0,
+              height: dataModel.meetupEventVideos.length * 460.0,
               child: ListView.builder(
                   itemCount: dataModel.meetupEventVideos.length,
                   itemBuilder: (context, index) {
