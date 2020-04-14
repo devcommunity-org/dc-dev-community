@@ -11,7 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:universal_html/html.dart' as html;
-
+import 'package:dc_community_app/extensions/hover_extensions.dart';
 import 'api.dart';
 import 'custom_cursor.dart';
 
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onPressed: () {
                       _openLink(linkForSection(0));
-                    }),
+                    }).showCursorOnHover,
               ]
             : null,
       ),
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () {
                       _openLink(linkForSection(0));
                     },
-                  )
+                  ).showCursorOnHover
                 ],
               ),
             ),
@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         icon: Icon(Icons.record_voice_over),
         label: Text(MyLocalizations.of(context).getString("volunteerToSpeak")),
-      ),
+      ).showCursorOnHover,
     );
   }
 
@@ -197,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 900,
                                 child: CustomCursor(
                                     cursorStyle: CustomCursor.text,
-                                    child: SelectableText(
+                                    child: Text(
                                         MyLocalizations.of(context)
                                             .getString("homeBodyText"),
                                         style: TextStyle(fontSize: 25.0))),
@@ -218,7 +218,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: Text(
-                        MyLocalizations.of(context).getString("upcomingMeetups"),
+                        MyLocalizations.of(context)
+                            .getString("upcomingMeetups"),
                         style: TextStyle(fontSize: 30.0)),
                   ),
                   Container(
@@ -249,12 +250,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Container(
-          height: dataModel.meetupEvents.length * 165.0,
+          height: dataModel.meetupEvents.length * .2 * MediaQuery.of(context).size.width,
           child: ListView.builder(
               itemCount: dataModel.meetupEvents.length,
               itemBuilder: (context, index) {
-                return generateMeetupEventCard(
-                    dataModel.meetupEvents[index]);
+                return generateMeetupEventCard(dataModel.meetupEvents[index]);
               }),
         ),
       ),
@@ -309,12 +309,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ButtonBar(
                   children: <Widget>[
-                    FlatButton(
-                      child: const Text('DETAILS'),
-                      onPressed: () {
-                        _openLink(meetupEvent.url);
-                      },
-                    ),
+                    generateStandardButton("DETAILS", meetupEvent.url)
                   ],
                 ),
               ],
@@ -335,15 +330,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text(meetupEventVideo.title),
               subtitle:
                   Text(DateFormat("yMMMMEEEEd").format(meetupEventVideo.date)),
-              trailing: FlatButton(
-                child: const Text(
-                  'WATCH',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onPressed: () {
-                  _openLink(meetupEventVideo.url);
-                },
-              ),
+              trailing: generateStandardButton("WATCH", meetupEventVideo.url),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
@@ -353,6 +340,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  Widget generateStandardButton(String buttonText, String url) {
+    return FlatButton(
+      child: Text(
+        buttonText,
+        style: TextStyle(color: Colors.blue),
+      ),
+      onPressed: () {
+        _openLink(url);
+      },
+    ).showCursorOnHover;
   }
 
   Widget logosWidget() {
@@ -366,8 +365,9 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel.meetups.forEach((meetup) {
       children.add(SizedBox(height: 10, width: 10));
       children.add(FlatButton(
-          onPressed: () => _openLink(meetup.url),
-          child: roundedMeetupLogo(meetup.logoUrl, 190.0)));
+              onPressed: () => _openLink(meetup.url),
+              child: roundedMeetupLogo(meetup.logoUrl, 190.0))
+          .showCursorOnHover);
       children.add(SizedBox(height: 10, width: 10));
     });
 
@@ -409,12 +409,11 @@ class _MyHomePageState extends State<MyHomePage> {
         Image(
             image: AssetImage('assets/images/entrance-narrow.jpg'),
             fit: BoxFit.cover),
-        SelectableText(MyLocalizations.of(context).getString("homeBodyText"),
+        Text(MyLocalizations.of(context).getString("homeBodyText"),
             style: TextStyle(fontSize: 20.0)),
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
-          child: Text(
-              MyLocalizations.of(context).getString("upcomingMeetups"),
+          child: Text(MyLocalizations.of(context).getString("upcomingMeetups"),
               style: TextStyle(fontSize: 30.0)),
         ),
         Padding(
@@ -432,7 +431,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showDialog() { //generic function to let user know that something isn't yet complete
+  void _showDialog() {
+    //generic function to let user know that something isn't yet complete
     showDialog(
       context: context,
       builder: (BuildContext context) {
