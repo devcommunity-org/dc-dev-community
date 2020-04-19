@@ -18,7 +18,7 @@ class Api {
 
   Future<AggregatedDataModel> fetchData() async {
     final response = await http
-        .get('https://us-central1-dc-dev-community.cloudfunctions.net/events');
+        .get('https://dc-dev-community-public.storage.googleapis.com/data.json');
     List<MeetupEvent> meetupEvents = [];
     List<Meetup> meetups = [];
     List<MeetupEventVideo> meetupEventVideos = [];
