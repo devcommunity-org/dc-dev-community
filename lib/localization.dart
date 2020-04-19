@@ -14,7 +14,7 @@ class MyLocalizations {
 
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
-      'pageTitle': 'DC Dev Community',
+      'pageTitle': 'Dev Community',
       "aboutUs": "About Us",
       "volunteerToSpeak": "Volunteer to Speak",
       "homeBodyText": "Welcome to Dev Community! We are a family of meetups that span a wide variety of tech disciplines, including mobile, web, and cloud development. Check out our upcoming meetups, and volunteer to speak - we are always looking for fresh faces and ideas!",
