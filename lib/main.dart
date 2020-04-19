@@ -61,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var sectionNames = [
       //MyLocalizations.of(context).getString("aboutUs"), //TODO: build this
-      MyLocalizations.of(context).getString("volunteerToSpeak")
+      MyLocalizations.of(context).getString("volunteerToSpeak"),
+      MyLocalizations.of(context).getString("contribute")
     ];
 
     return Scaffold(
@@ -70,13 +71,29 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.black,
         actions: isDesktop()
             ? <Widget>[
+          MaterialButton(
+              child: Text(
+                sectionNames[0],
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                _openLink(linkForSection(0));
+              }).showCursorOnHover,
                 MaterialButton(
-                    child: Text(
-                      sectionNames[0],
-                      style: TextStyle(color: Colors.white),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            sectionNames[1],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Image.asset('assets/images/github-icon.png'),
+                      ],
                     ),
                     onPressed: () {
-                      _openLink(linkForSection(0));
+                      _openLink(linkForSection(1));
                     }).showCursorOnHover,
               ]
             : null,
@@ -100,6 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text(sectionNames[0]),
                     onTap: () {
                       _openLink(linkForSection(0));
+                    },
+                  ).showCursorOnHover,
+                  ListTile(
+                    title: Text(sectionNames[1]),
+                    onTap: () {
+                      _openLink(linkForSection(1));
                     },
                   ).showCursorOnHover
                 ],
@@ -140,7 +163,11 @@ class _MyHomePageState extends State<MyHomePage> {
           return "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform?usp=sf_link";
         }
         break;
-
+      case 1:
+        {
+          return "https://github.com/devcommunity-org/dc-dev-community";
+        }
+        break;
       default:
         {
           return null;
@@ -250,7 +277,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Container(
-          height: dataModel.meetupEvents.length * .2 * MediaQuery.of(context).size.width,
+          height: dataModel.meetupEvents.length *
+              .2 *
+              MediaQuery.of(context).size.width,
           child: ListView.builder(
               itemCount: dataModel.meetupEvents.length,
               itemBuilder: (context, index) {
