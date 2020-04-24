@@ -14,39 +14,4 @@ class Utils {
 
   Utils._internal();
 
-  String imageFromMeetupKey(String meetupKey) {
-    switch (meetupKey) {
-      case "gdg-dc":
-        {
-          return "gdg-dc.png";
-        }
-        break;
-
-      case "DCFlutter":
-        {
-          return "dc-flutter.png";
-        }
-        break;
-      case "DCKotlin":
-        {
-          return "dc-kotlin.jpg";
-        }
-        break;
-      case "DCAndroid":
-        {
-          return "dc-android.jpg";
-        }
-        break;
-      case "DC-iOS":
-        {
-          return "dc-ios.jpg";
-        }
-        break;
-
-      default:
-        {
-          return "";
-        }
-    }
-  }
 }

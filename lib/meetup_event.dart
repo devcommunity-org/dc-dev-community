@@ -5,6 +5,7 @@ class MeetupEvent {
   final String description;
   final String location;
   final DateTime date;
+  String logoUrl;
 
   MeetupEvent({this.meetup, this.url, this.title, this.description, this.location, this.date});
 

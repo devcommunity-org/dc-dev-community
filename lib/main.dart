@@ -333,8 +333,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: roundedMeetupLogo(
-                      Utils().imageFromMeetupKey(meetupEvent.meetup), 50.0),
+                  child: roundedNetworkImage(
+                      meetupEvent.logoUrl, 50.0),
                 ),
                 ButtonBar(
                   children: <Widget>[
@@ -395,7 +395,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children.add(SizedBox(height: 10, width: 10));
       children.add(FlatButton(
               onPressed: () => _openLink(meetup.url),
-              child: roundedMeetupLogo(meetup.logoUrl, 190.0))
+              child: roundedMeetupLogo(meetup.logoUrl, 150.0))
           .showCursorOnHover);
       children.add(SizedBox(height: 10, width: 10));
     });
@@ -416,8 +416,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Widget roundedMeetupLogo(String fileName, double widthHeight) {
-    return roundedImage("assets/images/meetup_logos/" + fileName, widthHeight);
+  Widget roundedMeetupLogo(String url, double widthHeight) {
+    return roundedNetworkImage(url, widthHeight);
   }
 
   Widget roundedImage(String fileName, double widthHeight) {
@@ -430,6 +430,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.grey, width: 2.0, style: BorderStyle.solid),
             image: DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(fileName))));
+  }
+
+  Widget roundedNetworkImage(String url, double widthHeight) {
+    return Container(
+        width: widthHeight,
+        height: widthHeight,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: new Border.all(
+                color: Colors.grey, width: 2.0, style: BorderStyle.solid),
+            image: DecorationImage(
+                fit: BoxFit.fill, image: NetworkImage(url))));
   }
 
   Widget mobileVersion() {

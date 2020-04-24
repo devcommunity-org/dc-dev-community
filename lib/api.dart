@@ -18,7 +18,7 @@ class Api {
 
   Future<AggregatedDataModel> fetchData() async {
     final response = await http
-        .get('https://dc-dev-community-public.storage.googleapis.com/data.json');
+        .get('https://dc-dev-community-public.storage.googleapis.com/api.json?ignoreCache=true');
     List<MeetupEvent> meetupEvents = [];
     List<Meetup> meetups = [];
     List<MeetupEventVideo> meetupEventVideos = [];
@@ -35,7 +35,9 @@ class Api {
       }
 
       for (dynamic meetupEventJson in meetupEventsJsonArray) {
-        meetupEvents.add(MeetupEvent.fromJson(meetupEventJson));
+        MeetupEvent meetupEvent = MeetupEvent.fromJson(meetupEventJson);
+        meetupEvent.logoUrl = logoUrlFromMeetupId(meetupEvent.meetup, meetups);
+        meetupEvents.add(meetupEvent);
       }
 
       for (dynamic meetupVideoJson in meetupVideosJsonArray) {
@@ -48,6 +50,14 @@ class Api {
       return dataModel;
     } else {
       return null;
+    }
+  }
+
+  String logoUrlFromMeetupId(String meetupId, List<Meetup> meetups) {
+    for(Meetup meetup in meetups) {
+      if(meetup.meetupId == meetupId) {
+        return meetup.logoUrl;
+      }
     }
   }
 }
