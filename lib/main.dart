@@ -62,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var sectionNames = [
       //MyLocalizations.of(context).getString("aboutUs"), //TODO: build this
       MyLocalizations.of(context).getString("volunteerToSpeak"),
+      MyLocalizations.of(context).getString("twitterHandle"),
       MyLocalizations.of(context).getString("contribute")
     ];
 
@@ -71,29 +72,64 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.black,
         actions: isDesktop()
             ? <Widget>[
-          MaterialButton(
-              child: Text(
-                sectionNames[0],
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                _openLink(linkForSection(0));
-              }).showCursorOnHover,
                 MaterialButton(
                     child: Row(
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
-                          child: Text(
-                            sectionNames[1],
-                            style: TextStyle(color: Colors.white),
+                          child: Icon(Icons.mic, color: Colors.white),
+                        ),
+                        Text(
+                          sectionNames[0],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      _openLink(linkForSection(0));
+                    }).showCursorOnHover,
+                MaterialButton(
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset(
+                            'assets/images/twitter-icon.png',
+                            height: 32,
+                            width: 32,
                           ),
                         ),
-                        Image.asset('assets/images/github-icon.png'),
+                        Text(
+                          sectionNames[1],
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                     onPressed: () {
                       _openLink(linkForSection(1));
+                    }).showCursorOnHover,
+                MaterialButton(
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset(
+                            'assets/images/github-icon.png',
+                            height: 32,
+                            width: 32,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            sectionNames[2],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      _openLink(linkForSection(2));
                     }).showCursorOnHover,
               ]
             : null,
@@ -123,6 +159,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text(sectionNames[1]),
                     onTap: () {
                       _openLink(linkForSection(1));
+                    },
+                  ).showCursorOnHover,
+                  ListTile(
+                    title: Text(sectionNames[2]),
+                    onTap: () {
+                      _openLink(linkForSection(2));
                     },
                   ).showCursorOnHover
                 ],
@@ -161,6 +203,11 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         {
           return "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform?usp=sf_link";
+        }
+        break;
+      case 1:
+        {
+          return "https://twitter.com/devcommunityorg";
         }
         break;
       case 1:
@@ -333,8 +380,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: roundedNetworkImage(
-                      meetupEvent.logoUrl, 50.0),
+                  child: roundedNetworkImage(meetupEvent.logoUrl, 50.0),
                 ),
                 ButtonBar(
                   children: <Widget>[
@@ -440,8 +486,8 @@ class _MyHomePageState extends State<MyHomePage> {
             shape: BoxShape.circle,
             border: new Border.all(
                 color: Colors.grey, width: 2.0, style: BorderStyle.solid),
-            image: DecorationImage(
-                fit: BoxFit.fill, image: NetworkImage(url))));
+            image:
+                DecorationImage(fit: BoxFit.fill, image: NetworkImage(url))));
   }
 
   Widget mobileVersion() {

@@ -18,15 +18,18 @@ class MyLocalizations {
       "aboutUs": "About Us",
       "volunteerToSpeak": "Volunteer to Speak",
       "contribute": "Contribute",
-      "homeBodyText": "Welcome to Dev Community! We are a family of meetups that span a wide variety of tech disciplines, including mobile, web, and cloud development. Check out our upcoming meetups, and volunteer to speak - we are always looking for fresh faces and ideas!",
+      "homeBodyText":
+          "Welcome to Dev Community! We are a family of meetups that span a wide variety of tech disciplines, including mobile, web, and cloud development. Check out our upcoming meetups, and volunteer to speak - we are always looking for fresh faces and ideas!",
       "upcomingMeetups": "Upcoming Meetups",
       "featuredVideo": "Featured Video",
-      "volunteerToSpeak": "Volunteer to Speak"
-}
+      "volunteerToSpeak": "Volunteer to Speak",
+      "twitterHandle": "@DevCommunityOrg"
+    }
   };
 
   String getString(String stringName) {
-    return _localizedValues[locale.languageCode][stringName] ?? "MISSING STRING";
+    return _localizedValues[locale.languageCode][stringName] ??
+        "MISSING STRING";
   }
 }
 
