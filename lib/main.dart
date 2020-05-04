@@ -210,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return "https://twitter.com/devcommunityorg";
         }
         break;
-      case 1:
+      case 2:
         {
           return "https://github.com/devcommunity-org/dc-dev-community";
         }
