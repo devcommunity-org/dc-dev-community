@@ -4,18 +4,19 @@ import 'package:dc_community_app/localization.dart';
 import 'package:dc_community_app/meetup.dart';
 import 'package:dc_community_app/meetup_event.dart';
 import 'package:dc_community_app/meetup_event_video.dart';
-import 'package:dc_community_app/utils.dart';
+import 'package:dc_community_app/menu_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:dc_community_app/extensions/hover_extensions.dart';
+import 'package:dc_community_app/extensions/widget_extensions.dart';
 import 'api.dart';
 import 'custom_cursor.dart';
 
 void main() => runApp(MyApp());
+
+enum MenuButtonType { volunteer, videos, social, contribute }
 
 class MyApp extends StatelessWidget {
   @override
@@ -59,115 +60,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var sectionNames = [
-      //MyLocalizations.of(context).getString("aboutUs"), //TODO: build this
-      MyLocalizations.of(context).getString("volunteerToSpeak"),
-      MyLocalizations.of(context).getString("twitterHandle"),
-      MyLocalizations.of(context).getString("contribute")
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text(MyLocalizations.of(context).getString("pageTitle")),
         backgroundColor: Colors.black,
-        actions: isDesktop()
-            ? <Widget>[
-                MaterialButton(
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Icon(Icons.mic, color: Colors.white),
-                        ),
-                        Text(
-                          sectionNames[0],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      _openLink(linkForSection(0));
-                    }).showCursorOnHover,
-                MaterialButton(
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Image.asset(
-                            'assets/images/twitter-icon.png',
-                            height: 32,
-                            width: 32,
-                          ),
-                        ),
-                        Text(
-                          sectionNames[1],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      _openLink(linkForSection(1));
-                    }).showCursorOnHover,
-                MaterialButton(
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Image.asset(
-                            'assets/images/github-icon.png',
-                            height: 32,
-                            width: 32,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Text(
-                            sectionNames[2],
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      _openLink(linkForSection(2));
-                    }).showCursorOnHover,
-              ]
-            : null,
+        actions: isDesktop() ? _generateMenuButtons(false) : null,
       ),
       drawer: isDesktop()
           ? null
           : Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  DrawerHeader(
-                    child: Text(
-                      MyLocalizations.of(context).getString("pageTitle"),
-                      style: TextStyle(color: Colors.white),
+              child: Container(
+                color: Colors.black,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    Container(
+                      color: Colors.white,
+                      child: Center(
+                        child: DrawerHeader(
+                          child: Text(
+                            MyLocalizations.of(context).getString("pageTitle"),
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20.0),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(sectionNames[0]),
-                    onTap: () {
-                      _openLink(linkForSection(0));
-                    },
-                  ).showCursorOnHover,
-                  ListTile(
-                    title: Text(sectionNames[1]),
-                    onTap: () {
-                      _openLink(linkForSection(1));
-                    },
-                  ).showCursorOnHover,
-                  ListTile(
-                    title: Text(sectionNames[2]),
-                    onTap: () {
-                      _openLink(linkForSection(2));
-                    },
-                  ).showCursorOnHover
-                ],
+                    ..._generateMenuButtons(true)
+                  ],
+                ),
               ),
             ),
       body: SingleChildScrollView(
@@ -190,7 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
               })),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          _openLink(linkForSection(0));
+          widget.openLink(_menuButtonForType(MenuButtonType.volunteer, false)
+              .url); //need a better way to re-use link to volunteer
         },
         icon: Icon(Icons.record_voice_over),
         label: Text(MyLocalizations.of(context).getString("volunteerToSpeak")),
@@ -198,28 +123,55 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  String linkForSection(int sectionNum) {
-    switch (sectionNum) {
-      case 0:
-        {
-          return "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform?usp=sf_link";
-        }
+  MenuButton _menuButtonForType(MenuButtonType type, bool isForDrawer) {
+    switch (type) {
+      case MenuButtonType.contribute:
+        return MenuButton(
+            title: MyLocalizations.of(context).getString("contribute"),
+            url: "https://github.com/devcommunity-org/dc-dev-community",
+            iconWidget: Image.asset(
+              'assets/images/github-icon.png',
+              height: 32,
+              width: 32,
+            ),
+            isForDrawer: isForDrawer);
         break;
-      case 1:
-        {
-          return "https://twitter.com/devcommunityorg";
-        }
+      case MenuButtonType.volunteer:
+        return MenuButton(
+            title: MyLocalizations.of(context).getString("volunteerToSpeak"),
+            url:
+                "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform",
+            iconWidget: Icon(Icons.mic, color: Colors.white),
+            isForDrawer: isForDrawer);
         break;
-      case 2:
-        {
-          return "https://github.com/devcommunity-org/dc-dev-community";
-        }
+      case MenuButtonType.videos:
+        return MenuButton(
+            title: MyLocalizations.of(context).getString("videos"),
+            url: "https://www.youtube.com/channel/UC6LQu2qmtVqYBaXc_3p5UKA",
+            iconWidget: Icon(Icons.video_library, color: Colors.white),
+            isForDrawer: isForDrawer);
         break;
-      default:
-        {
-          return null;
-        }
+      case MenuButtonType.social:
+        return MenuButton(
+            title: MyLocalizations.of(context).getString("twitterHandle"),
+            url: "https://twitter.com/devcommunityorg",
+            iconWidget: Image.asset(
+              'assets/images/twitter-icon.png',
+              height: 32,
+              width: 32,
+            ),
+            isForDrawer: isForDrawer);
+        break;
     }
+  }
+
+  List<MenuButton> _generateMenuButtons(bool isForDrawer) {
+    return [
+      _menuButtonForType(MenuButtonType.volunteer, isForDrawer),
+      _menuButtonForType(MenuButtonType.videos, isForDrawer),
+      _menuButtonForType(MenuButtonType.social, isForDrawer),
+      _menuButtonForType(MenuButtonType.contribute, isForDrawer)
+    ];
   }
 
   _fetchData() {
@@ -424,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
         style: TextStyle(color: Colors.blue),
       ),
       onPressed: () {
-        _openLink(url);
+        widget.openLink(url);
       },
     ).showCursorOnHover;
   }
@@ -440,7 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel.meetups.forEach((meetup) {
       children.add(SizedBox(height: 10, width: 10));
       children.add(FlatButton(
-              onPressed: () => _openLink(meetup.url),
+              onPressed: () => widget.openLink(meetup.url),
               child: roundedMeetupLogo(meetup.logoUrl, 150.0))
           .showCursorOnHover);
       children.add(SizedBox(height: 10, width: 10));
@@ -450,16 +402,6 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: const EdgeInsets.all(30.0),
       child: rowOrCol,
     );
-  }
-
-  _openLink(String url) async {
-    if (kIsWeb) {
-      html.window.open(url, '_blank');
-    } else {
-      if (await canLaunch(url)) {
-        launch(url);
-      }
-    }
   }
 
   Widget roundedMeetupLogo(String url, double widthHeight) {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'dart:html' as html;
 
 extension HoverExtensions on Widget {

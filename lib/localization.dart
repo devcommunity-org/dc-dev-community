@@ -23,7 +23,8 @@ class MyLocalizations {
       "upcomingMeetups": "Upcoming Meetups",
       "featuredVideo": "Featured Video",
       "volunteerToSpeak": "Volunteer to Speak",
-      "twitterHandle": "@DevCommunityOrg"
+      "twitterHandle": "@DevCommunityOrg",
+      "videos": "YouTube Channel"
     }
   };
 
