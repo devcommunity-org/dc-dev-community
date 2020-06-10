@@ -131,8 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
             url: "https://github.com/devcommunity-org/dc-dev-community",
             iconWidget: Image.asset(
               'assets/images/github-icon.png',
-              height: 32,
-              width: 32,
+              height: 26,
+              width: 26,
             ),
             isForDrawer: isForDrawer);
         break;
@@ -157,8 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
             url: "https://twitter.com/devcommunityorg",
             iconWidget: Image.asset(
               'assets/images/twitter-icon.png',
-              height: 32,
-              width: 32,
+              height: 26,
+              width: 26,
             ),
             isForDrawer: isForDrawer);
         break;
