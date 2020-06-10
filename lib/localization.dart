@@ -25,6 +25,7 @@ class MyLocalizations {
       "volunteerToSpeak": "Volunteer to Speak",
       "twitterHandle": "@DevCommunityOrg",
       "videos": "YouTube Channel",
+      "newsletter": "Newsletter",
       "todayAt": "Today at",
       "details": "DETAILS",
       "watch": "WATCH"

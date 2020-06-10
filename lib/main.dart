@@ -16,7 +16,7 @@ import 'custom_cursor.dart';
 
 void main() => runApp(MyApp());
 
-enum MenuButtonType { volunteer, videos, social, contribute }
+enum MenuButtonType { volunteer, videos, social, contribute, newsletter }
 
 class MyApp extends StatelessWidget {
   @override
@@ -125,6 +125,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   MenuButton _menuButtonForType(MenuButtonType type, bool isForDrawer) {
     switch (type) {
+      case MenuButtonType.newsletter:
+        return MenuButton(
+          title: MyLocalizations.of(context).getString("newsletter"),
+          url: "https://docs.google.com/forms/d/e/1FAIpQLSdZFjPBUEjWzJYDp0Th2GI5hoxsEvKHbJFd0h-kM4x4ukDjlQ/viewform?usp=sf_link",
+          iconWidget: Icon(Icons.email, color: Colors.white),
+          isForDrawer: isForDrawer,
+        );
+        break;
       case MenuButtonType.contribute:
         return MenuButton(
             title: MyLocalizations.of(context).getString("contribute"),
@@ -167,6 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<MenuButton> _generateMenuButtons(bool isForDrawer) {
     return [
+      _menuButtonForType(MenuButtonType.newsletter, isForDrawer),
       _menuButtonForType(MenuButtonType.volunteer, isForDrawer),
       _menuButtonForType(MenuButtonType.videos, isForDrawer),
       _menuButtonForType(MenuButtonType.social, isForDrawer),
