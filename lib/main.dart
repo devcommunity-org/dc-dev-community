@@ -114,11 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
               })),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          widget.openLink(_menuButtonForType(MenuButtonType.volunteer, false)
-              .url); //need a better way to re-use link to volunteer
+          widget.openLink(_menuButtonForType(MenuButtonType.newsletter, false)
+              .url); //need a better way to re-use link for newsletter
         },
-        icon: Icon(Icons.record_voice_over),
-        label: Text(MyLocalizations.of(context).getString("volunteerToSpeak")),
+        icon: Icon(Icons.email),
+        label: Text(MyLocalizations.of(context).getString("newsletterSignUp")),
       ).showCursorOnHover,
     );
   }
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: MyLocalizations.of(context).getString("volunteerToSpeak"),
             url:
                 "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform",
-            iconWidget: Icon(Icons.mic, color: Colors.white),
+            iconWidget: Icon(Icons.record_voice_over, color: Colors.white),
             isForDrawer: isForDrawer);
         break;
       case MenuButtonType.videos:
