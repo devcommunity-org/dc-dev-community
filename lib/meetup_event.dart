@@ -5,9 +5,10 @@ class MeetupEvent {
   final String description;
   final String location;
   final DateTime date;
+  final bool isToday;
   String logoUrl;
 
-  MeetupEvent({this.meetup, this.url, this.title, this.description, this.location, this.date});
+  MeetupEvent({this.meetup, this.url, this.title, this.description, this.location, this.date, this.isToday});
 
   factory MeetupEvent.fromJson(dynamic json) {
     return MeetupEvent(
@@ -16,6 +17,7 @@ class MeetupEvent {
         title: json['title'] as String,
         description: json['description'] as String,
         location: json["location"] as String,
-        date: DateTime.parse(json["date"] as String));
+        date: DateTime.parse(json["date"] as String),
+        isToday: json["isToday"] as bool);
   }
 }

@@ -24,7 +24,10 @@ class MyLocalizations {
       "featuredVideo": "Featured Video",
       "volunteerToSpeak": "Volunteer to Speak",
       "twitterHandle": "@DevCommunityOrg",
-      "videos": "YouTube Channel"
+      "videos": "YouTube Channel",
+      "todayAt": "Today at",
+      "details": "DETAILS",
+      "watch": "WATCH"
     }
   };
 

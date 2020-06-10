@@ -212,8 +212,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 350,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/splash.jpg'),
+                                    image:
+                                        AssetImage('assets/images/splash.jpg'),
                                     fit: BoxFit.cover))),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
@@ -322,10 +322,18 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              leading: Icon(Icons.event),
+              leading: Icon(Icons.event,
+                  color: meetupEvent.isToday ? Theme.of(context).accentColor : null),
               title: Text(meetupEvent.title),
               subtitle: Text(
-                  DateFormat("yMMMMEEEEd").add_jm().format(meetupEvent.date)),
+                meetupEvent.isToday
+                    ? MyLocalizations.of(context).getString("todayAt") +
+                        " " +
+                        DateFormat("h:mm aa").format(meetupEvent.date)
+                    : DateFormat("yMMMMEEEEd")
+                        .add_jm()
+                        .format(meetupEvent.date),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -336,7 +344,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ButtonBar(
                   children: <Widget>[
-                    generateStandardButton("DETAILS", meetupEvent.url)
+                    generateStandardButton(
+                        MyLocalizations.of(context).getString("details"),
+                        meetupEvent.url)
                   ],
                 ),
               ],
@@ -357,7 +367,9 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text(meetupEventVideo.title),
               subtitle:
                   Text(DateFormat("yMMMMEEEEd").format(meetupEventVideo.date)),
-              trailing: generateStandardButton("WATCH", meetupEventVideo.url),
+              trailing: generateStandardButton(
+                  MyLocalizations.of(context).getString("watch"),
+                  meetupEventVideo.url),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
@@ -435,9 +447,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget mobileVersion() {
     return Column(
       children: <Widget>[
-        Image(
-            image: AssetImage('assets/images/splash.jpg'),
-            fit: BoxFit.cover),
+        Image(image: AssetImage('assets/images/splash.jpg'), fit: BoxFit.cover),
         Text(MyLocalizations.of(context).getString("homeBodyText"),
             style: TextStyle(fontSize: 20.0)),
         Padding(
