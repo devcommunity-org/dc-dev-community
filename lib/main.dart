@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/images/entrance-narrow.jpg'),
+                                        'assets/images/splash.jpg'),
                                     fit: BoxFit.cover))),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
@@ -436,7 +436,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(
       children: <Widget>[
         Image(
-            image: AssetImage('assets/images/entrance-narrow.jpg'),
+            image: AssetImage('assets/images/splash.jpg'),
             fit: BoxFit.cover),
         Text(MyLocalizations.of(context).getString("homeBodyText"),
             style: TextStyle(fontSize: 20.0)),
