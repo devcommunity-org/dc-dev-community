@@ -18,7 +18,7 @@ class Api {
 
   Future<AggregatedDataModel> fetchData() async {
     final response = await http
-        .get('https://dc-dev-community-public.storage.googleapis.com/api.json?ignoreCache=1');
+        .get('https://dc-dev-community-public.storage.googleapis.com/api.json?cache=0');
     List<MeetupEvent> meetupEvents = [];
     List<Meetup> meetups = [];
     List<MeetupEventVideo> meetupEventVideos = [];
