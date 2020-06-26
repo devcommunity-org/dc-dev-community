@@ -128,7 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case MenuButtonType.newsletter:
         return MenuButton(
           title: MyLocalizations.of(context).getString("newsletter"),
-          url: "https://docs.google.com/forms/d/e/1FAIpQLSdZFjPBUEjWzJYDp0Th2GI5hoxsEvKHbJFd0h-kM4x4ukDjlQ/viewform?usp=sf_link",
+          url:
+              "https://docs.google.com/forms/d/e/1FAIpQLSdZFjPBUEjWzJYDp0Th2GI5hoxsEvKHbJFd0h-kM4x4ukDjlQ/viewform?usp=sf_link",
           iconWidget: Icon(Icons.email, color: Colors.white),
           isForDrawer: isForDrawer,
         );
@@ -284,16 +285,19 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: new BorderRadius.all(Radius.circular(10.0))),
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Container(
-          height: dataModel.meetupEvents.length *
-              .2 *
-              MediaQuery.of(context).size.width,
-          child: ListView.builder(
-              itemCount: dataModel.meetupEvents.length,
-              itemBuilder: (context, index) {
-                return generateMeetupEventCard(dataModel.meetupEvents[index]);
-              }),
-        ),
+        child: dataModel.meetupEvents.length > 0
+            ? Container(
+                height: dataModel.meetupEvents.length *
+                    .2 *
+                    MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                    itemCount: dataModel.meetupEvents.length,
+                    itemBuilder: (context, index) {
+                      return generateMeetupEventCard(
+                          dataModel.meetupEvents[index]);
+                    }),
+              )
+            : Container(height: 290.0, width: 300.0, child: Center(child: Text(MyLocalizations.of(context).getString("noEventsMessage"), style: TextStyle(fontSize: 15.0), textAlign: TextAlign.center,)),),
       ),
     );
   }
@@ -332,7 +336,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.event,
-                  color: meetupEvent.isToday ? Theme.of(context).accentColor : null),
+                  color: meetupEvent.isToday
+                      ? Theme.of(context).accentColor
+                      : null),
               title: Text(meetupEvent.title),
               subtitle: Text(
                 meetupEvent.isToday
