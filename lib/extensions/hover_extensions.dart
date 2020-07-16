@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 
 extension HoverExtensions on Widget {
   // Get a reference to the body of the view
