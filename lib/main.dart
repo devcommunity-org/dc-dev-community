@@ -485,8 +485,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showDialog() {
-    //generic function to let user know that something isn't yet complete
+  void _showDialogForUnfinishedFeature() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
