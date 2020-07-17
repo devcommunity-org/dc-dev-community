@@ -23,7 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: "Open Sans"),
+      theme: ThemeData(
+          primaryColor: Color(0xFF3A93F7),
+          accentColor: Color(0xFF50AD32),
+          fontFamily: "Open Sans"),
       onGenerateTitle: (BuildContext context) =>
           MyLocalizations.of(context).getString("pageTitle"),
       localizationsDelegates: [
@@ -62,7 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(MyLocalizations.of(context).getString("pageTitle")),
+        title: Image.asset(
+          'assets/images/menu-bar-logo.png',
+          height: 42,
+        ),
         backgroundColor: Colors.black,
         actions: isDesktop() ? _generateMenuButtons(false) : null,
       ),
@@ -78,10 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Colors.white,
                       child: Center(
                         child: DrawerHeader(
-                          child: Text(
-                            MyLocalizations.of(context).getString("pageTitle"),
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20.0),
+                          child: Image.asset(
+                            'assets/images/drawer-logo.png',
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -172,6 +176,8 @@ class _MyHomePageState extends State<MyHomePage> {
             isForDrawer: isForDrawer);
         break;
     }
+
+    return null;
   }
 
   List<MenuButton> _generateMenuButtons(bool isForDrawer) {
@@ -281,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget upcomingMeetupsWidget() {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey,
+          color: Theme.of(context).primaryColor,
           borderRadius: new BorderRadius.all(Radius.circular(10.0))),
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -306,7 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       width: 600.0,
       decoration: BoxDecoration(
-          color: Colors.grey,
+          color: Theme.of(context).primaryColor,
           borderRadius: new BorderRadius.all(Radius.circular(10.0))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -400,7 +406,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return FlatButton(
       child: Text(
         buttonText,
-        style: TextStyle(color: Colors.blue),
+        style: TextStyle(color: Theme.of(context).primaryColor),
       ),
       onPressed: () {
         widget.openLink(url);
@@ -442,7 +448,7 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: new Border.all(
-                color: Colors.grey, width: 2.0, style: BorderStyle.solid),
+                color: Theme.of(context).primaryColor, width: 2.0, style: BorderStyle.solid),
             image: DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(fileName))));
   }
@@ -454,7 +460,7 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: new Border.all(
-                color: Colors.grey, width: 2.0, style: BorderStyle.solid),
+                color: Theme.of(context).primaryColor, width: 2.0, style: BorderStyle.solid),
             image:
                 DecorationImage(fit: BoxFit.fill, image: NetworkImage(url))));
   }
