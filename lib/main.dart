@@ -1,5 +1,6 @@
 import 'package:async/async.dart';
 import 'package:dc_community_app/AggregatedDataModel.dart';
+import 'package:dc_community_app/image_dialog.dart';
 import 'package:dc_community_app/localization.dart';
 import 'package:dc_community_app/meetup.dart';
 import 'package:dc_community_app/meetup_event.dart';
@@ -57,6 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
     List<MeetupEvent> meetupEvents = [];
     dataModel =
         AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
+
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _displayMarketingDialog(context));
 
     super.initState();
   }
@@ -303,7 +307,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           dataModel.meetupEvents[index]);
                     }),
               )
-            : Container(height: 290.0, width: 300.0, child: Center(child: Text(MyLocalizations.of(context).getString("noEventsMessage"), style: TextStyle(fontSize: 15.0), textAlign: TextAlign.center,)),),
+            : Container(
+                height: 290.0,
+                width: 300.0,
+                child: Center(
+                    child: Text(
+                  MyLocalizations.of(context).getString("noEventsMessage"),
+                  style: TextStyle(fontSize: 15.0),
+                  textAlign: TextAlign.center,
+                )),
+              ),
       ),
     );
   }
@@ -448,7 +461,9 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: new Border.all(
-                color: Theme.of(context).primaryColor, width: 2.0, style: BorderStyle.solid),
+                color: Theme.of(context).primaryColor,
+                width: 2.0,
+                style: BorderStyle.solid),
             image: DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(fileName))));
   }
@@ -460,7 +475,9 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: new Border.all(
-                color: Theme.of(context).primaryColor, width: 2.0, style: BorderStyle.solid),
+                color: Theme.of(context).primaryColor,
+                width: 2.0,
+                style: BorderStyle.solid),
             image:
                 DecorationImage(fit: BoxFit.fill, image: NetworkImage(url))));
   }
@@ -489,6 +506,17 @@ class _MyHomePageState extends State<MyHomePage> {
         featuredVideoWidget()
       ],
     );
+  }
+
+  Future<void> _displayMarketingDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ImageDialog(
+              imagePath: "assets/images/android-summit-ad-early.png",
+              callToActionUrl:
+                  "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165").showPointerOnHover; //TODO: why doesn't this show a pointer on hover?
+        });
   }
 
   void _showDialogForUnfinishedFeature() {
