@@ -6,7 +6,7 @@ extension HoverExtensions on Widget {
   static final appContainer =
       html.window.document.getElementById('app-container');
 
-  Widget get showCursorOnHover {
+  Widget get showPointerOnHover {
     return MouseRegion(
       child: this,
       // When the mouse enters the widget set the cursor to pointer
