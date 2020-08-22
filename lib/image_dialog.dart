@@ -26,6 +26,7 @@ class _MyImageDialogState extends State<ImageDialog> {
     image = Image.asset(imagePath);
 
     return AlertDialog(
+      contentPadding: EdgeInsets.all(0.0),
       content: Column(
         mainAxisSize: MainAxisSize.min, //TODO: how can we make the dialog not resize upon loading the image (causes an annoying flicker)
         children: [
