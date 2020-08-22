@@ -26,7 +26,7 @@ class MenuButton extends StatelessWidget {
         onTap: () {
           openLink(url);
         },
-      ).showCursorOnHover;
+      ).showPointerOnHover;
     } else {
       return MaterialButton(
           child: Row(
@@ -42,7 +42,7 @@ class MenuButton extends StatelessWidget {
           ),
           onPressed: () {
             openLink(url);
-          }).showCursorOnHover;
+          }).showPointerOnHover;
     }
   }
 }
