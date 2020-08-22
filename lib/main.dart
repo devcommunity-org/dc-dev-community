@@ -356,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               leading: Icon(Icons.event,
                   color: meetupEvent.isToday
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).primaryColor
                       : null),
               title: Text(meetupEvent.title),
               subtitle: Text(
