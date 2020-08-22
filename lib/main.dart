@@ -123,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         icon: Icon(Icons.email),
         label: Text(MyLocalizations.of(context).getString("newsletterSignUp")),
-      ).showCursorOnHover,
+      ).showPointerOnHover,
     );
   }
 
@@ -411,7 +411,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onPressed: () {
         widget.openLink(url);
       },
-    ).showCursorOnHover;
+    ).showPointerOnHover;
   }
 
   Widget logosWidget() {
@@ -427,7 +427,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children.add(FlatButton(
               onPressed: () => widget.openLink(meetup.url),
               child: roundedMeetupLogo(meetup.logoUrl, 150.0))
-          .showCursorOnHover);
+          .showPointerOnHover);
       children.add(SizedBox(height: 10, width: 10));
     });
 
