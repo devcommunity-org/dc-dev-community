@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:dc_community_app/extensions/widget_extensions.dart';
 
@@ -32,23 +33,29 @@ class _MyImageDialogState extends State<ImageDialog> {
         children: [
           Stack(
             children: [
-              GestureDetector(
-                  child: Center(
-                    child: Container(child: image != null ? image : null),
-                  ),
-                  onTap: () async {
-                    context.widget.openLink(callToActionUrl);
-                  }),
-              Align(
-                alignment: Alignment.topRight,
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                    child: Icon(
-                      Icons.close,
-                      color: Colors.black,
+                    child: Center(
+                      child: Container(child: image != null ? image : null),
                     ),
                     onTap: () async {
-                      Navigator.pop(context);
+                      context.widget.openLink(callToActionUrl);
                     }),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                      onTap: () async {
+                        Navigator.pop(context);
+                      }),
+                ),
               ),
             ],
           ),

@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:dc_community_app/extensions/hover_extensions.dart';
 import 'package:dc_community_app/extensions/widget_extensions.dart';
 import 'api.dart';
 import 'custom_cursor.dart';
@@ -127,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         icon: Icon(Icons.email),
         label: Text(MyLocalizations.of(context).getString("newsletterSignUp")),
-      ).showPointerOnHover,
+      ),
     );
   }
 
@@ -424,7 +423,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onPressed: () {
         widget.openLink(url);
       },
-    ).showPointerOnHover;
+    );
   }
 
   Widget logosWidget() {
@@ -438,9 +437,8 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel.meetups.forEach((meetup) {
       children.add(SizedBox(height: 10, width: 10));
       children.add(FlatButton(
-              onPressed: () => widget.openLink(meetup.url),
-              child: roundedMeetupLogo(meetup.logoUrl, 150.0))
-          .showPointerOnHover);
+          onPressed: () => widget.openLink(meetup.url),
+          child: roundedMeetupLogo(meetup.logoUrl, 150.0)));
       children.add(SizedBox(height: 10, width: 10));
     });
 
@@ -515,7 +513,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return ImageDialog(
               imagePath: "assets/images/android-summit-ad-early.png",
               callToActionUrl:
-                  "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165").showPointerOnHover; //TODO: why doesn't this show a pointer on hover?
+                  "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165");
         });
   }
 

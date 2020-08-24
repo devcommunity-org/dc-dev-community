@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dc_community_app/extensions/hover_extensions.dart';
 import 'package:dc_community_app/extensions/widget_extensions.dart';
 
 class MenuButton extends StatelessWidget {
@@ -26,7 +25,7 @@ class MenuButton extends StatelessWidget {
         onTap: () {
           openLink(url);
         },
-      ).showPointerOnHover;
+      );
     } else {
       return MaterialButton(
           child: Row(
@@ -42,7 +41,7 @@ class MenuButton extends StatelessWidget {
           ),
           onPressed: () {
             openLink(url);
-          }).showPointerOnHover;
+          });
     }
   }
 }
