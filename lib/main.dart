@@ -511,9 +511,9 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (BuildContext context) {
           return ImageDialog(
-              imagePath: "assets/images/android-summit-ad-early.png",
+              imagePath: "assets/images/android-summit-ad.png",
               callToActionUrl:
-                  "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165");
+                  "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165?discount=DevCommunityOrgPromo2020");
         });
   }
 
