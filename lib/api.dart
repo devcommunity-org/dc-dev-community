@@ -42,7 +42,6 @@ class Api {
 
       for (dynamic meetupVideoJson in meetupVideosJsonArray) {
         meetupEventVideos.add(MeetupEventVideo.fromJson(meetupVideoJson));
-        break; //for now, only pull down one video for our "featured video" widget
       }
 
       AggregatedDataModel dataModel =
