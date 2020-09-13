@@ -222,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: padding, right: padding),
-          child: Container(width: 300.0, child: logosWidget()),
+          child: Container(width: 200.0, child: logosWidget()),
         ),
         Expanded(
           child: Column(
