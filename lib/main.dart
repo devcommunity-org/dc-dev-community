@@ -259,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: CustomCursor(
             cursorStyle: CustomCursor.text,
             child: Text(MyLocalizations.of(context).getString("homeBodyText"),
-                style: TextStyle(fontSize: 25.0))),
+                style: TextStyle(fontSize: 20.0))),
       )
     ]);
   }
@@ -325,32 +325,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget generateMeetupEventCard(MeetupEvent meetupEvent) {
     return Card(
+      elevation: 5.0,
+      margin: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(
+              width: meetupEvent.isToday ? 5.0 : 0.5,
+              color: meetupEvent.isToday
+                  ? Theme.of(context).accentColor
+                  : Colors.black),
+          borderRadius: BorderRadius.circular(20)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.event,
-                color: meetupEvent.isToday
-                    ? Theme.of(context).primaryColor
-                    : null),
+            leading: roundedNetworkImage(meetupEvent.logoUrl, 50.0),
             title: Text(meetupEvent.title),
             subtitle: Text(
               meetupEvent.isToday
                   ? MyLocalizations.of(context).getString("todayAt") +
                       " " +
                       DateFormat("h:mm aa").format(meetupEvent.date)
-                  : DateFormat("yMMMMEEEEd")
-                      .add_jm()
-                      .format(meetupEvent.date),
+                  : DateFormat("yMMMMEEEEd").add_jm().format(meetupEvent.date),
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: roundedNetworkImage(meetupEvent.logoUrl, 50.0),
-              ),
               ButtonBar(
                 children: <Widget>[
                   generateStandardButton(
@@ -367,6 +367,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget generateVideoCard(MeetupEventVideo meetupEventVideo) {
     return Card(
+      elevation: 5.0,
+      margin: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(width: 0.5),
+          borderRadius: BorderRadius.circular(20)),
       child: Column(
         children: <Widget>[
           ListTile(
