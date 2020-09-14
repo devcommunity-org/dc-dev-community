@@ -1,7 +1,7 @@
+import 'package:dc_community_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:dc_community_app/extensions/widget_extensions.dart';
 
 class ImageDialog extends StatefulWidget {
   ImageDialog({Key key, @required this.imagePath, this.callToActionUrl})
@@ -40,7 +40,7 @@ class _MyImageDialogState extends State<ImageDialog> {
                       child: Container(child: image != null ? image : null),
                     ),
                     onTap: () async {
-                      context.widget.openLink(callToActionUrl);
+                      Utils().openLink(callToActionUrl);
                     }),
               ),
               Align(

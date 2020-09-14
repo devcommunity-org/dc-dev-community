@@ -1,9 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:dc_community_app/AggregatedDataModel.dart';
-import 'package:dc_community_app/meetup.dart';
-import 'package:dc_community_app/meetup_event.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'package:universal_html/html.dart' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
   static final Utils _singleton = new Utils._internal();
@@ -14,4 +11,13 @@ class Utils {
 
   Utils._internal();
 
+  openLink(String url) async {
+    if (kIsWeb) {
+      html.window.open(url, '_blank');
+    } else {
+      if (await canLaunch(url)) {
+        launch(url);
+      }
+    }
+  }
 }

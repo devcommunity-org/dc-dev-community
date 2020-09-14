@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:dc_community_app/extensions/widget_extensions.dart';
 
 class MenuButton extends StatelessWidget {
   MenuButton(
       {@required this.title,
-      @required this.url,
+      @required this.action,
       @required this.iconWidget,
       @required this.isForDrawer});
 
   final String title;
-  final String url;
+  final VoidCallback action;
   final Widget iconWidget;
   final bool isForDrawer;
 
-  @override
+@override
   Widget build(BuildContext context) {
     if (isForDrawer) {
       return ListTile(
@@ -23,7 +22,7 @@ class MenuButton extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          openLink(url);
+         action();
         },
       );
     } else {
@@ -40,7 +39,7 @@ class MenuButton extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            openLink(url);
+            action();
           });
     }
   }

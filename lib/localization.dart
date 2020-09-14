@@ -26,6 +26,7 @@ class MyLocalizations {
       "twitterHandle": "@DevCommunityOrg",
       "videos": "YouTube Channel",
       "newsletter": "Newsletter",
+      "about": "About",
       "newsletterSignUp": "Sign up for our newsletter!",
       "todayAt": "Today at",
       "details": "DETAILS",

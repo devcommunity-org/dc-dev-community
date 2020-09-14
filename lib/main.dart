@@ -6,18 +6,19 @@ import 'package:dc_community_app/meetup.dart';
 import 'package:dc_community_app/meetup_event.dart';
 import 'package:dc_community_app/meetup_event_video.dart';
 import 'package:dc_community_app/menu_button.dart';
+import 'package:dc_community_app/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:dc_community_app/extensions/widget_extensions.dart';
+import 'package:marquee/marquee.dart';
 import 'api.dart';
 import 'custom_cursor.dart';
 
 void main() => runApp(MyApp());
 
-enum MenuButtonType { volunteer, videos, social, contribute, newsletter }
+enum ButtonType { volunteer, videos, social, contribute, newsletter, about }
 
 class MyApp extends StatelessWidget {
   @override
@@ -59,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel =
         AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _displayMarketingDialog(context));
+//    WidgetsBinding.instance
+//        .addPostFrameCallback((_) => _displayMarketingDialog(context));
 
     super.initState();
   }
@@ -110,19 +111,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 dataModel = snapshot.data;
               }
 
-              return Center(
-                  child: Padding(
+              return Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: mobileOrDesktop(),
-              ));
+              );
             } else {
               return Container();
             }
           }),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          widget.openLink(_menuButtonForType(MenuButtonType.newsletter, false)
-              .url); //need a better way to re-use link for newsletter
+          Utils().openLink(_urlForButtonAction(ButtonType.newsletter));
         },
         icon: Icon(Icons.email),
         label: Text(MyLocalizations.of(context).getString("newsletterSignUp")),
@@ -130,21 +129,44 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  MenuButton _menuButtonForType(MenuButtonType type, bool isForDrawer) {
+  String _urlForButtonAction(ButtonType buttonType) {
+    switch (buttonType) {
+      case ButtonType.newsletter:
+        return "https://docs.google.com/forms/d/e/1FAIpQLSdZFjPBUEjWzJYDp0Th2GI5hoxsEvKHbJFd0h-kM4x4ukDjlQ/viewform?usp=sf_link";
+        break;
+      case ButtonType.contribute:
+        return "https://github.com/devcommunity-org/dc-dev-community";
+        break;
+      case ButtonType.volunteer:
+        return "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform";
+        break;
+      case ButtonType.videos:
+        return "https://www.youtube.com/c/DevCommunity";
+        break;
+      case ButtonType.social:
+        return "https://twitter.com/devcommunityorg";
+        break;
+    }
+
+    return "";
+  }
+
+  MenuButton _menuButtonForType(ButtonType type, bool isForDrawer) {
     switch (type) {
-      case MenuButtonType.newsletter:
+      case ButtonType.newsletter:
         return MenuButton(
           title: MyLocalizations.of(context).getString("newsletter"),
-          url:
-              "https://docs.google.com/forms/d/e/1FAIpQLSdZFjPBUEjWzJYDp0Th2GI5hoxsEvKHbJFd0h-kM4x4ukDjlQ/viewform?usp=sf_link",
+          action: () =>
+              Utils().openLink(_urlForButtonAction(ButtonType.newsletter)),
           iconWidget: Icon(Icons.email, color: Colors.white),
           isForDrawer: isForDrawer,
         );
         break;
-      case MenuButtonType.contribute:
+      case ButtonType.contribute:
         return MenuButton(
             title: MyLocalizations.of(context).getString("contribute"),
-            url: "https://github.com/devcommunity-org/dc-dev-community",
+            action: () =>
+                Utils().openLink(_urlForButtonAction(ButtonType.contribute)),
             iconWidget: Image.asset(
               'assets/images/github-icon.png',
               height: 26,
@@ -152,30 +174,47 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             isForDrawer: isForDrawer);
         break;
-      case MenuButtonType.volunteer:
+      case ButtonType.volunteer:
         return MenuButton(
             title: MyLocalizations.of(context).getString("volunteerToSpeak"),
-            url:
-                "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform",
+            action: () =>
+                Utils().openLink(_urlForButtonAction(ButtonType.volunteer)),
             iconWidget: Icon(Icons.record_voice_over, color: Colors.white),
             isForDrawer: isForDrawer);
         break;
-      case MenuButtonType.videos:
+      case ButtonType.videos:
         return MenuButton(
             title: MyLocalizations.of(context).getString("videos"),
-            url: "https://www.youtube.com/channel/UC6LQu2qmtVqYBaXc_3p5UKA",
+            action: () =>
+                Utils().openLink(_urlForButtonAction(ButtonType.videos)),
             iconWidget: Icon(Icons.video_library, color: Colors.white),
             isForDrawer: isForDrawer);
         break;
-      case MenuButtonType.social:
+      case ButtonType.social:
         return MenuButton(
             title: MyLocalizations.of(context).getString("twitterHandle"),
-            url: "https://twitter.com/devcommunityorg",
+            action: () =>
+                Utils().openLink(_urlForButtonAction(ButtonType.social)),
             iconWidget: Image.asset(
               'assets/images/twitter-icon.png',
               height: 26,
               width: 26,
             ),
+            isForDrawer: isForDrawer);
+      case ButtonType.about:
+        return MenuButton(
+            title: MyLocalizations.of(context).getString("about"),
+            action: () => showAboutDialog(
+                  context: context,
+                  applicationIcon: Image(
+                    image: AssetImage('assets/images/logo-no-text.png'),
+                    width: 60,
+                  ),
+                  applicationName: 'DevCommunity',
+                  applicationVersion: '1.0',
+                  applicationLegalese: '© 2020 DevCommunity',
+                ),
+            iconWidget: Icon(Icons.help, color: Colors.white),
             isForDrawer: isForDrawer);
         break;
     }
@@ -185,11 +224,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<MenuButton> _generateMenuButtons(bool isForDrawer) {
     return [
-      _menuButtonForType(MenuButtonType.newsletter, isForDrawer),
-      _menuButtonForType(MenuButtonType.volunteer, isForDrawer),
-      _menuButtonForType(MenuButtonType.videos, isForDrawer),
-      _menuButtonForType(MenuButtonType.social, isForDrawer),
-      _menuButtonForType(MenuButtonType.contribute, isForDrawer)
+      _menuButtonForType(ButtonType.newsletter, isForDrawer),
+      _menuButtonForType(ButtonType.volunteer, isForDrawer),
+      _menuButtonForType(ButtonType.videos, isForDrawer),
+      _menuButtonForType(ButtonType.social, isForDrawer),
+      _menuButtonForType(ButtonType.contribute, isForDrawer),
+      _menuButtonForType(ButtonType.about, isForDrawer)
     ];
   }
 
@@ -222,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: padding, right: padding),
-          child: Container(width: 200.0, child: logosWidget()),
+          child: Container(width: 200.0, child: logosWidget(vertical: true)),
         ),
         Expanded(
           child: Column(
@@ -387,7 +427,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: Image.network(meetupEventVideo.thumbnailUrl)),
-              onTap: () => widget.openLink(meetupEventVideo.url)),
+              onTap: () => Utils().openLink(meetupEventVideo.url)),
         ],
       ),
     );
@@ -400,12 +440,12 @@ class _MyHomePageState extends State<MyHomePage> {
         style: TextStyle(color: Theme.of(context).primaryColor),
       ),
       onPressed: () {
-        widget.openLink(url);
+        Utils().openLink(url);
       },
     );
   }
 
-  Widget logosWidget() {
+  Widget logosWidget({bool vertical}) {
     return LayoutBuilder(builder: (context, size) {
       List<Widget> children = [];
 
@@ -413,19 +453,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
       dataModel.meetups.forEach((meetup) {
         children.add(FlatButton(
-            onPressed: () => widget.openLink(meetup.url),
+            onPressed: () => Utils().openLink(meetup.url),
             child: Padding(
               padding: const EdgeInsets.all(buttonPadding),
               child: roundedMeetupLogo(
                   meetup.logoUrl,
-                  (size.maxHeight -
+                  ((vertical ? size.maxHeight : size.maxWidth) -
                           buttonPadding * 2 * dataModel.meetups.length) /
                       dataModel.meetups.length),
             )));
       });
 
-      return Column(
-          mainAxisAlignment: MainAxisAlignment.start, children: children);
+      return vertical
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.start, children: children)
+          : Marquee(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: children));
     });
   }
 
@@ -462,28 +507,33 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget mobileVersion() {
-    return Column(
-      children: <Widget>[
-        Image(image: AssetImage('assets/images/splash.jpg'), fit: BoxFit.cover),
-        Text(MyLocalizations.of(context).getString("homeBodyText"),
-            style: TextStyle(fontSize: 20.0)),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Text(MyLocalizations.of(context).getString("upcomingMeetups"),
-              style: TextStyle(fontSize: 30.0)),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: upcomingMeetupsWidget(),
-        ),
-        logosWidget(),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-          child: Text(MyLocalizations.of(context).getString("featuredVideo"),
-              style: TextStyle(fontSize: 30.0)),
-        ),
-        videosWidget()
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(height: 80.0, child: logosWidget(vertical: false)),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: heroWidget(),
+          ),
+          // Padding(
+          //   padding:   const EdgeInsets.only(top: 16.0),
+          //   child: Text(
+          //       MyLocalizations.of(context).getString("upcomingMeetups"),
+          //       style: TextStyle(fontSize: 30.0)),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 20.0),
+          //   child: upcomingMeetupsWidget(),
+          // ),
+          //logosWidget(),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+          //   child: Text(MyLocalizations.of(context).getString("featuredVideo"),
+          //       style: TextStyle(fontSize: 30.0)),
+          // ),
+          //videosWidget()
+        ],
+      ),
     );
   }
 
