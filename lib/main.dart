@@ -7,6 +7,7 @@ import 'package:dc_community_app/meetup_event.dart';
 import 'package:dc_community_app/meetup_event_video.dart';
 import 'package:dc_community_app/menu_button.dart';
 import 'package:dc_community_app/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'api.dart';
-import 'custom_cursor.dart';
 
 void main() => runApp(MyApp());
 
@@ -53,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final AsyncMemoizer _memoizer = AsyncMemoizer();
   AggregatedDataModel dataModel;
 
+  bool upcomingEventsHiddenForMobile = false;
+
   @override
   void initState() {
     List<Meetup> meetups = [];
@@ -60,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel =
         AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _displayMarketingDialog(context));
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => _displayMarketingDialog(context));
 
     super.initState();
   }
@@ -205,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return MenuButton(
             title: MyLocalizations.of(context).getString("about"),
             action: () => showAboutDialog(
+                  //TODO: Localize the View Licenses and Close buttons, if needed
                   context: context,
                   applicationIcon: Image(
                     image: AssetImage('assets/images/logo-no-text.png'),
@@ -249,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool isDesktop() {
-    return MediaQuery.of(context).size.width >= 1330;
+    return MediaQuery.of(context).size.width >= 1150;
   }
 
   Widget desktopVersion() {
@@ -295,12 +298,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     image: AssetImage('assets/images/splash.jpg'),
                     fit: BoxFit.cover))),
       ),
-      Container(
-        child: CustomCursor(
-            cursorStyle: CustomCursor.text,
-            child: Text(MyLocalizations.of(context).getString("homeBodyText"),
-                style: TextStyle(fontSize: 20.0))),
-      )
+      Text(MyLocalizations.of(context).getString("homeBodyText"),
+          style: TextStyle(fontSize: 20.0))
     ]);
   }
 
@@ -313,15 +312,19 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(20.0),
         child: dataModel.meetupEvents.length > 0
             ? Container(
-                child: ListView.builder(
-                    itemCount: dataModel.meetupEvents.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 16.0),
-                        child: generateMeetupEventCard(
-                            dataModel.meetupEvents[index]),
-                      );
-                    }),
+                child: LimitedBox(
+                  maxHeight: 2000.0,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: dataModel.meetupEvents.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 16.0),
+                          child: generateMeetupEventCard(
+                              dataModel.meetupEvents[index]),
+                        );
+                      }),
+                ),
               )
             : Container(
                 height: 290.0,
@@ -456,7 +459,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => Utils().openLink(meetup.url),
             child: Padding(
               padding: const EdgeInsets.all(buttonPadding),
-              child: roundedMeetupLogo(
+              child: roundedNetworkImage(
                   meetup.logoUrl,
                   ((vertical ? size.maxHeight : size.maxWidth) -
                           buttonPadding * 2 * dataModel.meetups.length) /
@@ -474,10 +477,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget roundedMeetupLogo(String url, double widthHeight) {
-    return roundedNetworkImage(url, widthHeight);
-  }
-
   Widget roundedImage(String fileName, double widthHeight) {
     return Container(
         width: widthHeight,
@@ -493,17 +492,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget roundedNetworkImage(String url, double widthHeight) {
-    return Container(
-        width: widthHeight,
-        height: widthHeight,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-                color: Theme.of(context).primaryColor,
-                width: 2.0,
-                style: BorderStyle.solid),
-            image:
-                DecorationImage(fit: BoxFit.fill, image: NetworkImage(url))));
+    return Card(
+      elevation: 5.0,
+      margin: EdgeInsets.all(0.0),
+      shape: CircleBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: CircleAvatar(
+          radius: widthHeight / 2,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(widthHeight / 2),
+              child: Image(
+                image: NetworkImage(url),
+              ))),
+    );
   }
 
   Widget mobileVersion() {
@@ -512,26 +513,36 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Container(height: 80.0, child: logosWidget(vertical: false)),
           Padding(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
             child: heroWidget(),
           ),
-          // Padding(
-          //   padding:   const EdgeInsets.only(top: 16.0),
-          //   child: Text(
-          //       MyLocalizations.of(context).getString("upcomingMeetups"),
-          //       style: TextStyle(fontSize: 30.0)),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 20.0),
-          //   child: upcomingMeetupsWidget(),
-          // ),
-          //logosWidget(),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-          //   child: Text(MyLocalizations.of(context).getString("featuredVideo"),
-          //       style: TextStyle(fontSize: 30.0)),
-          // ),
-          //videosWidget()
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: CupertinoSegmentedControl(
+                selectedColor: Theme.of(context).primaryColor,
+                children: <int, Widget>{
+                  0: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(MyLocalizations.of(context)
+                          .getString("attendUpcomingEvents"))),
+                  1: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(MyLocalizations.of(context)
+                          .getString("watchRecordedEvents")))
+                },
+                onValueChanged: (int value) {
+                  setState(() {
+                    upcomingEventsHiddenForMobile = (value == 0) ? false : true;
+                  });
+                },
+                groupValue: upcomingEventsHiddenForMobile ? 1 : 0),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: upcomingEventsHiddenForMobile
+                ? videosWidget()
+                : upcomingMeetupsWidget(),
+          ),
         ],
       ),
     );

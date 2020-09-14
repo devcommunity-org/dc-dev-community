@@ -20,8 +20,6 @@ class MyLocalizations {
       "contribute": "Contribute",
       "homeBodyText":
           "Welcome to Dev Community! We are a family of meetups that span a wide variety of tech disciplines, including mobile, web, and cloud development. Check out our upcoming meetups, catch up on our previous recordings, and volunteer to speak - we are always looking for fresh faces and ideas!",
-      "upcomingMeetups": "Upcoming Meetups",
-      "featuredVideo": "Featured Video",
       "volunteerToSpeak": "Volunteer to Speak",
       "twitterHandle": "@DevCommunityOrg",
       "videos": "YouTube Channel",
@@ -31,7 +29,9 @@ class MyLocalizations {
       "todayAt": "Today at",
       "details": "DETAILS",
       "watch": "WATCH",
-      "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!"
+      "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
+      "attendUpcomingEvents": "Attend Upcoming Events",
+      "watchRecordedEvents": "Watch Recorded Events"
     }
   };
 
