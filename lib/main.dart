@@ -60,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel =
         AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
 
-//    WidgetsBinding.instance
-//        .addPostFrameCallback((_) => _displayMarketingDialog(context));
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _displayMarketingDialog(context));
 
     super.initState();
   }
@@ -308,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          borderRadius: new BorderRadius.all(Radius.circular(10.0))),
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: dataModel.meetupEvents.length > 0
@@ -340,7 +340,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          borderRadius: new BorderRadius.all(Radius.circular(10.0))),
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -484,7 +484,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: widthHeight,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: new Border.all(
+            border: Border.all(
                 color: Theme.of(context).primaryColor,
                 width: 2.0,
                 style: BorderStyle.solid),
@@ -498,7 +498,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: widthHeight,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: new Border.all(
+            border: Border.all(
                 color: Theme.of(context).primaryColor,
                 width: 2.0,
                 style: BorderStyle.solid),
@@ -552,14 +552,12 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
-          title: new Text("Under Construction..."),
-          content: new Text("Feel free to submit a PR!"),
+          title: Text("Under Construction..."),
+          content: Text("Feel free to submit a PR!"),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
+            FlatButton(
+              child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
