@@ -62,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
     dataModel =
         AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
 
-    // WidgetsBinding.instance
-    //     .addPostFrameCallback((_) => _displayMarketingDialog(context));
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _displayMarketingDialog(context));
 
     super.initState();
   }
