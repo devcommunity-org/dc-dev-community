@@ -28,10 +28,9 @@ class MyLocalizations {
       "newsletterSignUp": "Sign up for our newsletter!",
       "todayAt": "Today at",
       "details": "DETAILS",
-      "watch": "WATCH",
       "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
-      "attendUpcomingEvents": "Attend Upcoming Events",
-      "watchRecordedEvents": "Watch Recorded Events"
+      "attendUpcomingEvents": "Upcoming Events",
+      "watchRecordedEvents": "Recorded Events"
     }
   };
 

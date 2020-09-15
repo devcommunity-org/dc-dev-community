@@ -422,9 +422,6 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text(meetupEventVideo.title),
             subtitle:
                 Text(DateFormat("yMMMMEEEEd").format(meetupEventVideo.date)),
-            trailing: generateStandardButton(
-                MyLocalizations.of(context).getString("watch"),
-                meetupEventVideo.url),
           ),
           GestureDetector(
               child: MouseRegion(
