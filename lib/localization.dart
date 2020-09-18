@@ -29,8 +29,8 @@ class MyLocalizations {
       "todayAt": "Today at",
       "details": "DETAILS",
       "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
-      "attendUpcomingEvents": "Upcoming Events",
-      "watchRecordedEvents": "Recorded Events"
+      "upcomingEvents": "Upcoming Events",
+      "recentEventVideos": "Recent Event Videos"
     }
   };
 

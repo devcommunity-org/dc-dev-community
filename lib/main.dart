@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:async/async.dart';
 import 'package:dc_community_app/AggregatedDataModel.dart';
 import 'package:dc_community_app/image_dialog.dart';
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      color: Color(0xffe7ebee),
       theme: ThemeData(
           primaryColor: Color(0xFF3A93F7),
           accentColor: Color(0xFF50AD32),
@@ -52,6 +55,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final AsyncMemoizer _memoizer = AsyncMemoizer();
   AggregatedDataModel dataModel;
+
+  final screenPadding = 20.0;
 
   bool upcomingEventsHiddenForMobile = false;
 
@@ -114,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
               }
 
               return Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(screenPadding),
                 child: mobileOrDesktop(),
               );
             } else {
@@ -252,38 +257,61 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool isDesktop() {
-    return MediaQuery.of(context).size.width >= 1150;
+    return MediaQuery.of(context).size.width >= 1200;
   }
 
   Widget desktopVersion() {
     const padding = 16.0;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child:
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: padding, right: padding),
-          child: Container(width: 200.0, child: logosWidget(vertical: true)),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: heroWidget(),
-              ),
-              Flexible(child: upcomingMeetupsWidget()),
-            ],
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(width: 200.0, child: logosWidget(vertical: true)),
+          Expanded(
+            child: Column(
+              children: [
+                heroWidget(),
+                Padding(
+                  padding: EdgeInsets.only(top: padding, bottom: padding),
+                  child: headerWidget("recentEventVideos"),
+                ),
+                videosWidget(small: false),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: padding, right: padding),
-          child: SingleChildScrollView(
-              child: Container(width: 500.0, child: videosWidget())),
+          Padding(
+            padding: const EdgeInsets.only(left: padding, right: padding),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: padding),
+                  child: headerWidget("upcomingEvents"),
+                ),
+                Container(
+                    width: 500.0, child: upcomingMeetupsWidget(small: false)),
+              ],
+            ),
+          )
+        ]),
+      ),
+    );
+  }
+
+  Widget headerWidget(String key) {
+    return Column(
+      children: [
+        Text(MyLocalizations.of(context).getString(key),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400)),
+        Container(
+          width: 64,
+          child: Divider(
+            color: Theme.of(context).primaryColor,
+            height: 20,
+            thickness: 2,
+          ),
         )
-      ]),
+      ],
     );
   }
 
@@ -299,74 +327,71 @@ class _MyHomePageState extends State<MyHomePage> {
                     fit: BoxFit.cover))),
       ),
       Text(MyLocalizations.of(context).getString("homeBodyText"),
-          style: TextStyle(fontSize: 20.0))
+          style: TextStyle(fontSize: 16.0))
     ]);
   }
 
-  Widget upcomingMeetupsWidget() {
-    return Container(
-      decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: dataModel.meetupEvents.length > 0
-            ? Container(
-                child: LimitedBox(
-                  maxHeight: 2000.0,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: dataModel.meetupEvents.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 16.0),
-                          child: generateMeetupEventCard(
-                              dataModel.meetupEvents[index]),
-                        );
-                      }),
-                ),
-              )
-            : Container(
-                height: 290.0,
-                child: Center(
-                    child: Text(
-                  MyLocalizations.of(context).getString("noEventsMessage"),
-                  style: TextStyle(fontSize: 24.0, color: Colors.white),
-                  textAlign: TextAlign.center,
-                )),
-              ),
-      ),
-    );
+  Widget upcomingMeetupsWidget({bool small}) {
+    return dataModel.meetupEvents.length > 0
+        ? Container(
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: dataModel.meetupEvents.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: generateMeetupEventCard(
+                        dataModel.meetupEvents[index],
+                        small: small),
+                  );
+                }),
+          )
+        : Container(
+            height: 290.0,
+            child: Center(
+                child: Text(
+              MyLocalizations.of(context).getString("noEventsMessage"),
+              style: TextStyle(fontSize: 24.0, color: Colors.white),
+              textAlign: TextAlign.center,
+            )),
+          );
   }
 
-  Widget videosWidget() {
-    return Container(
-      decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
+  Widget videosWidget({bool small}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        LimitedBox(
+          maxHeight: 10000.0,
+          child: (small && MediaQuery.of(context).size.width < 600)
+              ? ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
                   itemCount: dataModel.meetupEventVideos.length,
                   itemBuilder: (context, index) {
-                    return Padding(
-                        padding: EdgeInsets.only(bottom: 16.0),
-                        child: generateVideoCard(
-                            dataModel.meetupEventVideos[index]));
+                    return generateVideoCard(
+                        dataModel.meetupEventVideos[index]);
+                  })
+              : GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0,
+                  ),
+                  itemCount: dataModel.meetupEventVideos.length,
+                  itemBuilder: (context, index) {
+                    return generateVideoCard(
+                        dataModel.meetupEventVideos[index]);
                   }),
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 
-  Widget generateMeetupEventCard(MeetupEvent meetupEvent) {
+  Widget generateMeetupEventCard(MeetupEvent meetupEvent, {bool small}) {
     return Card(
       elevation: 5.0,
       margin: EdgeInsets.all(10),
@@ -377,58 +402,87 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? Theme.of(context).accentColor
                   : Colors.black),
           borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: roundedNetworkImage(meetupEvent.logoUrl, 50.0),
-            title: Text(meetupEvent.title),
-            subtitle: Text(
-              meetupEvent.isToday
-                  ? MyLocalizations.of(context).getString("todayAt") +
-                      " " +
-                      DateFormat("h:mm aa").format(meetupEvent.date)
-                  : DateFormat("yMMMMEEEEd").add_jm().format(meetupEvent.date),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: roundedNetworkImage(meetupEvent.logoUrl, 50.0),
+              title: Text(meetupEvent.title),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              ButtonBar(
-                children: <Widget>[
-                  generateStandardButton(
-                      MyLocalizations.of(context).getString("details"),
-                      meetupEvent.url)
-                ],
-              ),
-            ],
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 8.0),
+                  child: Text(
+                    meetupEvent.isToday
+                        ? MyLocalizations.of(context).getString("todayAt") +
+                            " " +
+                            DateFormat("h:mm aa").format(meetupEvent.date)
+                        : DateFormat("yMMMMEEEEd")
+                            .add_jm()
+                            .format(meetupEvent.date),
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+                (small
+                    ? Container()
+                    : generateStandardButton(
+                        MyLocalizations.of(context).getString("details"),
+                        meetupEvent.url)),
+              ],
+            ),
+            (!small
+                ? Container()
+                : Align(
+              alignment: Alignment.bottomRight,
+                  child: generateStandardButton(
+                  MyLocalizations.of(context).getString("details"),
+                  meetupEvent.url),
+                ))
+          ],
+        ),
       ),
     );
   }
 
   Widget generateVideoCard(MeetupEventVideo meetupEventVideo) {
-    return Card(
-      elevation: 5.0,
-      margin: EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.5),
-          borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.videocam),
-            title: Text(meetupEventVideo.title),
-            subtitle:
-                Text(DateFormat("yMMMMEEEEd").format(meetupEventVideo.date)),
-          ),
-          GestureDetector(
-              child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Image.network(meetupEventVideo.thumbnailUrl)),
-              onTap: () => Utils().openLink(meetupEventVideo.url)),
-        ],
+    return LimitedBox(
+      maxHeight: 300,
+      child: Card(
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(width: 0.5),
+            borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.ondemand_video),
+              title: Text(
+                meetupEventVideo.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle:
+                  Text(DateFormat("yMMMMEEEEd").format(meetupEventVideo.date)),
+            ),
+            Expanded(
+              child: Container(
+                color: Colors.black,
+                child: GestureDetector(
+                    child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Image.network(meetupEventVideo.thumbnailUrl,
+                            fit: BoxFit.fitWidth)),
+                    onTap: () => Utils().openLink(meetupEventVideo.url)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -451,6 +505,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       const buttonPadding = 8.0;
 
+      double logoHeightForVertical = max(
+          MediaQuery.of(context).size.height -
+              AppBar().preferredSize.height -
+              screenPadding * 2,
+          600);
+
       dataModel.meetups.forEach((meetup) {
         children.add(FlatButton(
             onPressed: () => Utils().openLink(meetup.url),
@@ -458,7 +518,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(buttonPadding),
               child: roundedNetworkImage(
                   meetup.logoUrl,
-                  ((vertical ? size.maxHeight : size.maxWidth) -
+                  ((vertical ? (logoHeightForVertical) : size.maxWidth) -
                           buttonPadding * 2 * dataModel.meetups.length) /
                       dataModel.meetups.length),
             )));
@@ -521,11 +581,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   0: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(MyLocalizations.of(context)
-                          .getString("attendUpcomingEvents"))),
+                          .getString("upcomingEvents"))),
                   1: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(MyLocalizations.of(context)
-                          .getString("watchRecordedEvents")))
+                          .getString("recentEventVideos")))
                 },
                 onValueChanged: (int value) {
                   setState(() {
@@ -537,8 +597,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: upcomingEventsHiddenForMobile
-                ? videosWidget()
-                : upcomingMeetupsWidget(),
+                ? videosWidget(small: true)
+                : upcomingMeetupsWidget(small: true),
           ),
         ],
       ),

@@ -44,6 +44,10 @@ class Api {
         meetupEventVideos.add(MeetupEventVideo.fromJson(meetupVideoJson));
       }
 
+      if(meetupEventVideos.length > 4) {
+        meetupEventVideos = meetupEventVideos.sublist(0, 4); //for now, limit to 4 videos to keep UI clean
+      }
+
       AggregatedDataModel dataModel =
           AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents, meetupEventVideos: meetupEventVideos);
       return dataModel;
