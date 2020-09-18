@@ -331,19 +331,40 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget upcomingMeetupsWidget({bool small}) {
     return dataModel.meetupEvents.length > 0
         ? Container(
-            child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: dataModel.meetupEvents.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                    child: generateMeetupEventCard(
-                        dataModel.meetupEvents[index],
-                        small: small),
-                  );
-                }),
-          )
+            child: ((!small && MediaQuery.of(context).size.width > 600) ||
+                    (small && MediaQuery.of(context).size.width < 900))
+                ? ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: dataModel.meetupEvents.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: generateMeetupEventCard(
+                            dataModel.meetupEvents[index],
+                            small: small),
+                      );
+                    })
+                : GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 5.0,
+                      childAspectRatio:
+                          (MediaQuery.of(context).size.width / 0.35) /
+                              (MediaQuery.of(context).size.height),
+                    ),
+                    itemCount: dataModel.meetupEvents.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: generateMeetupEventCard(
+                            dataModel.meetupEvents[index],
+                            small: small),
+                      );
+                    }))
         : Container(
             height: 290.0,
             child: Center(
@@ -414,45 +435,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   : Colors.black),
           borderRadius: BorderRadius.circular(20)),
       child: Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
+          children: [
             ListTile(
+              isThreeLine: true,
               leading: roundedNetworkImage(meetupEvent.logoUrl, 50.0),
-              title: Text(meetupEvent.title),
+              title: Text(meetupEvent.title,
+                  maxLines: 2, overflow: TextOverflow.ellipsis),
+              subtitle: Text(
+                meetupEvent.isToday
+                    ? MyLocalizations.of(context).getString("todayAt") +
+                        " " +
+                        DateFormat("h:mm aa").format(meetupEvent.date)
+                    : DateFormat("yMMMMEEEEd")
+                        .add_jm()
+                        .format(meetupEvent.date),
+                style: TextStyle(color: Colors.black54),
+              ),
+              trailing: generateStandardButton(
+                  MyLocalizations.of(context).getString("details"),
+                  meetupEvent.url),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 8.0),
-                  child: Text(
-                    meetupEvent.isToday
-                        ? MyLocalizations.of(context).getString("todayAt") +
-                            " " +
-                            DateFormat("h:mm aa").format(meetupEvent.date)
-                        : DateFormat("yMMMMEEEEd")
-                            .add_jm()
-                            .format(meetupEvent.date),
-                    style: TextStyle(color: Colors.black54),
-                  ),
-                ),
-                (small
-                    ? Container()
-                    : generateStandardButton(
-                        MyLocalizations.of(context).getString("details"),
-                        meetupEvent.url)),
-              ],
-            ),
-            (!small
-                ? Container()
-                : Align(
-                    alignment: Alignment.bottomRight,
-                    child: generateStandardButton(
-                        MyLocalizations.of(context).getString("details"),
-                        meetupEvent.url),
-                  ))
           ],
         ),
       ),
