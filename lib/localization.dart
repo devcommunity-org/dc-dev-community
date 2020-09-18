@@ -30,7 +30,8 @@ class MyLocalizations {
       "details": "DETAILS",
       "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
       "upcomingEvents": "Upcoming Events",
-      "recentEventVideos": "Recent Event Videos"
+      "recentEventVideos": "Recent Event Videos",
+      "moreVideos": "More Videos"
     }
   };
 

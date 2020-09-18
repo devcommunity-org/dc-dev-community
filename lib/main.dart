@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return "https://docs.google.com/forms/d/e/1FAIpQLSeFiweTDZknMj2F3rx_alFS5VV5axn766sItUfyOy2KvVephw/viewform";
         break;
       case ButtonType.videos:
-        return "https://www.youtube.com/c/DevCommunity";
+        return "https://www.youtube.com/c/DevCommunity/videos";
         break;
       case ButtonType.social:
         return "https://twitter.com/devcommunityorg";
@@ -284,10 +284,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(left: padding, right: padding),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: padding),
-                  child: headerWidget("upcomingEvents"),
-                ),
+                headerWidget("upcomingEvents"),
                 Container(
                     width: 500.0, child: upcomingMeetupsWidget(small: false)),
               ],
@@ -359,35 +356,49 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget videosWidget({bool small}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        LimitedBox(
-          maxHeight: 10000.0,
-          child: (small && MediaQuery.of(context).size.width < 600)
-              ? ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: dataModel.meetupEventVideos.length,
-                  itemBuilder: (context, index) {
-                    return generateVideoCard(
-                        dataModel.meetupEventVideos[index]);
-                  })
-              : GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5.0,
-                    mainAxisSpacing: 5.0,
-                  ),
-                  itemCount: dataModel.meetupEventVideos.length,
-                  itemBuilder: (context, index) {
-                    return generateVideoCard(
-                        dataModel.meetupEventVideos[index]);
-                  }),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          LimitedBox(
+            maxHeight: 10000.0,
+            child: (small && MediaQuery.of(context).size.width < 600)
+                ? ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: dataModel.meetupEventVideos.length,
+                    itemBuilder: (context, index) {
+                      return generateVideoCard(
+                          dataModel.meetupEventVideos[index]);
+                    })
+                : GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 5.0,
+                    ),
+                    itemCount: dataModel.meetupEventVideos.length,
+                    itemBuilder: (context, index) {
+                      return generateVideoCard(
+                          dataModel.meetupEventVideos[index]);
+                    }),
+          ),
+          RaisedButton(
+              onPressed: () {
+                Utils().openLink(_urlForButtonAction(ButtonType.videos));
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              padding: const EdgeInsets.all(10.0),
+              child: Text(MyLocalizations.of(context).getString("moreVideos")))
+        ],
+      ),
     );
   }
 
@@ -437,11 +448,11 @@ class _MyHomePageState extends State<MyHomePage> {
             (!small
                 ? Container()
                 : Align(
-              alignment: Alignment.bottomRight,
-                  child: generateStandardButton(
-                  MyLocalizations.of(context).getString("details"),
-                  meetupEvent.url),
-                ))
+                    alignment: Alignment.bottomRight,
+                    child: generateStandardButton(
+                        MyLocalizations.of(context).getString("details"),
+                        meetupEvent.url),
+                  ))
           ],
         ),
       ),
