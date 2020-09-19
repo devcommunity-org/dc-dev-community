@@ -12,7 +12,7 @@ class MenuButton extends StatelessWidget {
   final Widget iconWidget;
   final bool isForDrawer;
 
-@override
+  @override
   Widget build(BuildContext context) {
     if (isForDrawer) {
       return ListTile(
@@ -22,7 +22,7 @@ class MenuButton extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-         action();
+          action();
         },
       );
     } else {

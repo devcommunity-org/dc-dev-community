@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:dc_community_app/AggregatedDataModel.dart';
-import 'package:dc_community_app/meetup.dart';
-import 'package:dc_community_app/meetup_event.dart';
+import 'package:dc_community_app/model/aggregated_data_model.dart';
+import 'package:dc_community_app/model/meetup.dart';
 import 'package:http/http.dart' as http;
 
-import 'meetup_event_video.dart';
+import '../model/meetup_event.dart';
+import '../model/meetup_event_video.dart';
 
 class Api {
   static final Api _singleton = new Api._internal();

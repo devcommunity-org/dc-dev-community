@@ -1,6 +1,6 @@
-import 'package:dc_community_app/meetup_event.dart';
-import 'package:dc_community_app/meetup_event_video.dart';
+import 'package:dc_community_app/model/meetup_event_video.dart';
 import 'meetup.dart';
+import 'meetup_event.dart';
 
 class AggregatedDataModel {
   final List<Meetup> meetups;
