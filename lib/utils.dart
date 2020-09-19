@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
+import 'enums/device_screen_type.dart';
 import 'localization.dart';
 import 'widgets/menu_button.dart';
-
-enum ButtonType { volunteer, videos, social, contribute, newsletter, about }
 
 class Utils {
   static final Utils _singleton = new Utils._internal();
@@ -16,6 +15,25 @@ class Utils {
   }
 
   Utils._internal();
+
+  DeviceScreenType getDeviceType(MediaQueryData mediaQuery) {
+    var orientation = mediaQuery.orientation;
+    double deviceWidth = mediaQuery.size.width;
+
+    // if (orientation == Orientation.landscape) { //TODO: Look into orientation changes and how it impacts deviceWidth calculation
+    //   deviceWidth = mediaQuery.size.height;
+    // } else {
+    //   deviceWidth = mediaQuery.size.width;
+    // }
+
+    if (deviceWidth > 1200) {
+      return DeviceScreenType.Desktop;
+    }
+    if (deviceWidth > 600) {
+      return DeviceScreenType.Tablet;
+    }
+    return DeviceScreenType.Mobile;
+  }
 
   openLink(String url) async {
     if (kIsWeb) {
@@ -120,5 +138,25 @@ class Utils {
     }
 
     return null;
+  }
+
+  void _showDialogForUnfinishedFeature(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Under Construction..."),
+          content: Text("Feel free to submit a PR!"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
