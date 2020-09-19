@@ -29,7 +29,6 @@ class VideoWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     ListTile(
-                      leading: Icon(Icons.ondemand_video),
                       title: Text(
                         video.title,
                         maxLines: 2,
