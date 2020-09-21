@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BaseWidget(builder: (context, sizingInformation) {
       return Scaffold(
+        backgroundColor: Color(0xfff6f6f6),
         appBar: AppBar(
           title: Image.asset(
             'assets/images/menu-bar-logo.png',
