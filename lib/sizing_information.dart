@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'enums/device_screen_type.dart';
+import 'enums/enums.dart';
 
 class SizingInformation {
   final Orientation orientation;

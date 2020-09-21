@@ -1,5 +1,5 @@
 import 'package:async/async.dart';
-import 'package:dc_community_app/enums/device_screen_type.dart';
+import 'package:dc_community_app/enums/enums.dart';
 import 'package:dc_community_app/model/aggregated_data_model.dart';
 import 'package:dc_community_app/model/meetup.dart';
 import 'package:dc_community_app/model/meetup_event.dart';
@@ -136,14 +136,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget content(SizingInformation sizingInformation) {
-    if (sizingInformation.isDesktop()) {
-      return desktopVersion();
-    } else if (sizingInformation.isMobile()) {
-      return mobileVersion();
-    } else if (sizingInformation.isTablet()) {
-      return mobileVersion();
-    } else {
-      return Text("Unsupported Device"); //TODO: move to String file
+    switch (sizingInformation.deviceType) {
+      case DeviceScreenType.Desktop:
+        {
+          return desktopVersion();
+        }
+        break;
+
+      case DeviceScreenType.Tablet:
+        {
+          return mobileVersion();
+        }
+        break;
+
+      case DeviceScreenType.Mobile:
+        {
+          return mobileVersion();
+        }
+        break;
     }
   }
 

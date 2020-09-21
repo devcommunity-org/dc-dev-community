@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
-import 'enums/device_screen_type.dart';
+import 'enums/enums.dart';
 import 'localization.dart';
 import 'widgets/menu_button.dart';
 
@@ -17,10 +17,10 @@ class Utils {
   Utils._internal();
 
   DeviceScreenType getDeviceType(MediaQueryData mediaQuery) {
-    var orientation = mediaQuery.orientation;
     double deviceWidth = mediaQuery.size.width;
 
-    // if (orientation == Orientation.landscape) { //TODO: Look into orientation changes and how it impacts deviceWidth calculation
+    //var orientation = mediaQuery.orientation;  //TODO: Look into orientation changes and how it impacts deviceWidth calculation
+    // if (orientation == Orientation.landscape) {
     //   deviceWidth = mediaQuery.size.height;
     // } else {
     //   deviceWidth = mediaQuery.size.width;
@@ -122,7 +122,6 @@ class Utils {
         return MenuButton(
             title: MyLocalizations.of(context).getString("about"),
             action: () => showAboutDialog(
-                  //TODO: Localize the View Licenses and Close buttons, if needed
                   context: context,
                   applicationIcon: Image(
                     image: AssetImage('assets/images/logo-no-text.png'),
@@ -140,16 +139,17 @@ class Utils {
     return null;
   }
 
-  void _showDialogForUnfinishedFeature(BuildContext context) {
+  void _showDialog(
+      BuildContext context, String title, String content, String buttonText) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Under Construction..."),
-          content: Text("Feel free to submit a PR!"),
+          title: Text(title),
+          content: Text(content),
           actions: <Widget>[
             FlatButton(
-              child: Text("Close"),
+              child: Text(buttonText),
               onPressed: () {
                 Navigator.of(context).pop();
               },

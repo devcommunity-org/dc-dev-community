@@ -28,14 +28,21 @@ class VideoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    ListTile(
-                      title: Text(
-                        video.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: ListTile(
+                          onTap: () => Utils().openLink(video.url),
+                          title: Text(
+                            video.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle:
+                              Text(DateFormat("yMMMMEEEEd").format(video.date)),
+                        ),
                       ),
-                      subtitle:
-                          Text(DateFormat("yMMMMEEEEd").format(video.date)),
                     ),
                     Expanded(
                       child: Container(

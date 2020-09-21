@@ -1,4 +1,4 @@
-import 'package:dc_community_app/enums/device_screen_type.dart';
+import 'package:dc_community_app/enums/enums.dart';
 import 'package:dc_community_app/localization.dart';
 import 'package:dc_community_app/model/meetup_event_video.dart';
 import 'package:dc_community_app/widgets/video_widget.dart';
