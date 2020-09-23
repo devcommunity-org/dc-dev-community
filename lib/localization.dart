@@ -1,7 +1,5 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:flutter/material.dart';
 
 class MyLocalizations {
   MyLocalizations(this.locale);
@@ -28,10 +26,12 @@ class MyLocalizations {
       "newsletterSignUp": "Sign up for our newsletter!",
       "todayAt": "Today at",
       "details": "DETAILS",
-      "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
+      "noEventsMessage":
+          "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
       "upcomingEvents": "Upcoming Events",
       "recentEventVideos": "Recent Event Videos",
-      "moreVideos": "More Videos"
+      "moreVideos": "More Videos",
+      "noVideos": "No videos..."
     }
   };
 
