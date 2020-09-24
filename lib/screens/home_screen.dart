@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../integration_test_keys.dart';
 import '../localization.dart';
 import '../utils.dart';
 
@@ -29,12 +30,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AsyncMemoizer _memoizer = AsyncMemoizer();
+  final _memoizer = AsyncMemoizer();
   AggregatedDataModel dataModel;
 
   final screenPadding = 20.0; //TODO: pull this out to constants file?
 
-  bool upcomingEventsHiddenForMobile = false;
+  var mobileSegmentedControlMode = MobileSegmentedControlMode.events;
 
   @override
   void initState() {
@@ -93,12 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
         body: FutureBuilder(
             future: _fetchData(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.data != null) {
-                  dataModel = snapshot.data;
-                }
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data != null) {
+                dataModel = snapshot.data;
 
                 return Padding(
+                  key: Key(IntegrationTestKeys.homeScreen),
                   padding: EdgeInsets.all(screenPadding),
                   child: content(sizingInformation),
                 );
@@ -138,19 +139,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget content(SizingInformation sizingInformation) {
     switch (sizingInformation.deviceType) {
-      case DeviceScreenType.Desktop:
+      case DeviceScreenType.desktop:
         {
           return desktopVersion();
         }
         break;
 
-      case DeviceScreenType.Tablet:
+      case DeviceScreenType.tablet:
         {
           return mobileVersion();
         }
         break;
 
-      case DeviceScreenType.Mobile:
+      case DeviceScreenType.mobile:
         {
           return mobileVersion();
         }
@@ -219,14 +220,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 onValueChanged: (int value) {
                   setState(() {
-                    upcomingEventsHiddenForMobile = (value == 0) ? false : true;
+                    mobileSegmentedControlMode =
+                        (value == MobileSegmentedControlMode.events.index)
+                            ? MobileSegmentedControlMode.events
+                            : MobileSegmentedControlMode.videos;
                   });
                 },
-                groupValue: upcomingEventsHiddenForMobile ? 1 : 0),
+                groupValue: (mobileSegmentedControlMode ==
+                        MobileSegmentedControlMode.videos)
+                    ? 1
+                    : 0),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: upcomingEventsHiddenForMobile
+            child: (mobileSegmentedControlMode ==
+                    MobileSegmentedControlMode.videos)
                 ? VideosWidget(dataModel.meetupEventVideos)
                 : UpcomingEventsWidget(dataModel.meetupEvents),
           ),

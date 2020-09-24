@@ -27,12 +27,12 @@ class Utils {
     // }
 
     if (deviceWidth > 1200) {
-      return DeviceScreenType.Desktop;
+      return DeviceScreenType.desktop;
     }
     if (deviceWidth > 600) {
-      return DeviceScreenType.Tablet;
+      return DeviceScreenType.tablet;
     }
-    return DeviceScreenType.Mobile;
+    return DeviceScreenType.mobile;
   }
 
   openLink(String url) async {

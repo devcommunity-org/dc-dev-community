@@ -1,4 +1,4 @@
-import 'package:dc_community_app/keys.dart';
+import 'package:dc_community_app/integration_test_keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
@@ -21,10 +21,10 @@ void main() {
       expect(health.status, HealthStatus.ok);
     });
 
-    test('at least one video available', () async {
-      final videosExist =
-          await isPresent(find.byValueKey(Keys.videos), driver) as bool;
-      expect(videosExist, isTrue);
+    test('API comes back successfuly', () async {
+      final homeScreenContentExists = await isPresent(
+          find.byValueKey(IntegrationTestKeys.homeScreen), driver) as bool;
+      expect(homeScreenContentExists, isTrue);
     });
   });
 }

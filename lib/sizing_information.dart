@@ -16,15 +16,15 @@ class SizingInformation {
   });
 
   bool isDesktop() {
-    return deviceType == DeviceScreenType.Desktop;
+    return deviceType == DeviceScreenType.desktop;
   }
 
   bool isMobile() {
-    return deviceType == DeviceScreenType.Mobile;
+    return deviceType == DeviceScreenType.mobile;
   }
 
   bool isTablet() {
-    return deviceType == DeviceScreenType.Tablet;
+    return deviceType == DeviceScreenType.tablet;
   }
 
   @override

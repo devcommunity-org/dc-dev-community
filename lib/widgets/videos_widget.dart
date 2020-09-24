@@ -5,7 +5,6 @@ import 'package:dc_community_app/widgets/video_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../keys.dart';
 import '../utils.dart';
 import 'base_widget.dart';
 
@@ -21,7 +20,6 @@ class VideosWidget extends StatelessWidget {
         return Text(MyLocalizations.of(context).getString("noVideos"));
       } else {
         return Padding(
-          key: Key(Keys.videos),
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
