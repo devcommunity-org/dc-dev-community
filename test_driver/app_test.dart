@@ -21,7 +21,7 @@ void main() {
       expect(health.status, HealthStatus.ok);
     });
 
-    test('API comes back successfuly', () async {
+    test('API comes back successfully', () async {
       final homeScreenContentExists = await isPresent(
           find.byValueKey(IntegrationTestKeys.homeScreen), driver) as bool;
       expect(homeScreenContentExists, isTrue);
