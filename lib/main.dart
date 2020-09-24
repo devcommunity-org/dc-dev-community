@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'constants.dart';
+
 void main() => runApp(
       DevicePreview(
         enabled: false, //!kReleaseMode,
@@ -21,9 +23,9 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: Color(0xFF3A93F7),
-          accentColor: Color(0xFF50AD32),
-          fontFamily: "Open Sans"),
+          primaryColor: Constants.primaryColor,
+          accentColor: Constants.accentColor,
+          fontFamily: Constants.fontFamily),
       onGenerateTitle: (BuildContext context) =>
           MyLocalizations.of(context).getString("pageTitle"),
       localizationsDelegates: [

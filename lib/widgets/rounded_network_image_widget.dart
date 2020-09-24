@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../constants.dart';
+
 class RoundedNetworkImage extends StatelessWidget {
   RoundedNetworkImage(this.url, this.widthHeight);
 
@@ -10,7 +12,7 @@ class RoundedNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5.0,
+      elevation: Constants.defaultElevation,
       margin: EdgeInsets.all(0.0),
       shape: CircleBorder(),
       clipBehavior: Clip.antiAlias,

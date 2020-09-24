@@ -1,3 +1,4 @@
+import 'package:dc_community_app/constants.dart';
 import 'package:dc_community_app/model/meetup_event.dart';
 import 'package:dc_community_app/widgets/rounded_network_image_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MeetupEventWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5.0,
+      elevation: Constants.defaultElevation,
       margin: EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -28,7 +29,7 @@ class MeetupEventWidget extends StatelessWidget {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Padding(
-          padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
           child: Align(
             alignment: Alignment.center,
             child: ListTile(

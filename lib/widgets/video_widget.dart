@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
+import '../constants.dart';
 import '../utils.dart';
 
 class VideoWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class VideoWidget extends StatelessWidget {
             child: LimitedBox(
               maxHeight: 300,
               child: Card(
-                elevation: 5.0,
+                elevation: Constants.defaultElevation,
                 shape: RoundedRectangleBorder(
                     side: BorderSide(width: 0.5),
                     borderRadius: BorderRadius.circular(20)),
@@ -31,7 +32,7 @@ class VideoWidget extends StatelessWidget {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: 8.0),
                         child: ListTile(
                           onTap: () => Utils().openLink(video.url),
                           title: Text(

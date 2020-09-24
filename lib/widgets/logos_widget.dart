@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:marquee/marquee.dart';
 
+import '../constants.dart';
 import '../model/meetup.dart';
 import '../utils.dart';
 
@@ -20,12 +21,11 @@ class LogosWidget extends StatelessWidget {
       List<Widget> children = [];
 
       const buttonPadding = 8.0;
-      const screenPadding = 20.0;
 
       double logoHeightForVertical = max(
           MediaQuery.of(context).size.height -
               AppBar().preferredSize.height -
-              screenPadding * 2,
+              Constants.screenPadding * 2,
           600);
 
       meetups.forEach((meetup) {

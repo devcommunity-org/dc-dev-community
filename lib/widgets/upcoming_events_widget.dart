@@ -24,7 +24,7 @@ class UpcomingEventsWidget extends StatelessWidget {
                       itemCount: events.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: EdgeInsets.only(bottom: 16.0),
+                          padding: const EdgeInsets.only(bottom: 16.0),
                           child: MeetupEventWidget(events[index]),
                         );
                       })
@@ -42,7 +42,7 @@ class UpcomingEventsWidget extends StatelessWidget {
                       itemCount: events.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: EdgeInsets.only(bottom: 16.0),
+                          padding: const EdgeInsets.only(bottom: 16.0),
                           child: MeetupEventWidget(events[index]),
                         );
                       }))

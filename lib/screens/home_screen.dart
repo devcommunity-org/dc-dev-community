@@ -1,4 +1,5 @@
 import 'package:async/async.dart';
+import 'package:dc_community_app/constants.dart';
 import 'package:dc_community_app/enums/enums.dart';
 import 'package:dc_community_app/model/aggregated_data_model.dart';
 import 'package:dc_community_app/model/meetup.dart';
@@ -32,8 +33,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _memoizer = AsyncMemoizer();
   AggregatedDataModel dataModel;
-
-  final screenPadding = 20.0; //TODO: pull this out to constants file?
 
   var mobileSegmentedControlMode = MobileSegmentedControlMode.events;
 
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 return Padding(
                   key: Key(IntegrationTestKeys.homeScreen),
-                  padding: EdgeInsets.all(screenPadding),
+                  padding: EdgeInsets.all(Constants.screenPadding),
                   child: content(sizingInformation),
                 );
               } else {
@@ -172,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 HeroWidget(),
                 Padding(
-                  padding: EdgeInsets.only(top: padding, bottom: padding),
+                  padding: const EdgeInsets.only(top: padding, bottom: padding),
                   child: HeaderWidget("recentEventVideos"),
                 ),
                 VideosWidget(dataModel.meetupEventVideos),
