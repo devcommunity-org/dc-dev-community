@@ -155,6 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
           return mobileVersion();
         }
         break;
+
+      default:
+        return mobileVersion();
     }
   }
 
@@ -208,11 +211,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CupertinoSegmentedControl(
                 selectedColor: Theme.of(context).primaryColor,
                 children: <int, Widget>{
-                  0: Padding(
+                  MobileSegmentedControlMode.events.index: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(MyLocalizations.of(context)
                           .getString("upcomingEvents"))),
-                  1: Padding(
+                  MobileSegmentedControlMode.videos.index: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(MyLocalizations.of(context)
                           .getString("recentEventVideos")))
