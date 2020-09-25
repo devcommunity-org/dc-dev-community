@@ -29,7 +29,7 @@ class MyLocalizations {
       "noEventsMessage":
           "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
       "upcomingEvents": "Upcoming Events",
-      "recentEventVideos": "Recent Event Videos",
+      "recentEventVideos": "Recent Videos",
       "moreVideos": "More Videos",
       "noVideos": "No videos..."
     }
