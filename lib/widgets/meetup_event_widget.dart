@@ -23,7 +23,7 @@ class MeetupEventWidget extends StatelessWidget {
           side: BorderSide(
               width: meetupEvent.isToday ? 5.0 : 0.5,
               color: meetupEvent.isToday
-                  ? Theme.of(context).accentColor
+                  ? Theme.of(context).primaryColor
                   : Colors.black),
           borderRadius: BorderRadius.circular(20)),
       child: MouseRegion(
