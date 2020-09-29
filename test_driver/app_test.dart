@@ -23,7 +23,7 @@ void main() {
 
     test('API comes back successfully', () async {
       final homeScreenContentExists = await isPresent(
-          find.byValueKey(IntegrationTestKeys.homeScreen), driver) as bool;
+          find.byValueKey(IntegrationTestKeys.homeScreenContent), driver);
       expect(homeScreenContentExists, isTrue);
     });
   });

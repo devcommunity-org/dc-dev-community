@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 dataModel = snapshot.data;
 
                 return Padding(
-                  key: Key(IntegrationTestKeys.homeScreen),
+                  key: Key(IntegrationTestKeys.homeScreenContent),
                   padding: EdgeInsets.all(Constants.screenPadding),
                   child: content(sizingInformation),
                 );
