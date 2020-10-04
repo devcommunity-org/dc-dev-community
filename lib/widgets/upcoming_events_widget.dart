@@ -1,8 +1,8 @@
+import 'package:dc_community_app/l10n/generated/app_localizations.dart';
 import 'package:dc_community_app/model/meetup_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../localization.dart';
 import 'base_widget.dart';
 import 'meetup_event_widget.dart';
 
@@ -50,7 +50,7 @@ class UpcomingEventsWidget extends StatelessWidget {
               height: 290.0,
               child: Center(
                   child: Text(
-                MyLocalizations.of(context).getString("noEventsMessage"),
+                AppLocalizations.of(context).noEventsMessage,
                 style: TextStyle(fontSize: 24.0, color: Colors.white),
                 textAlign: TextAlign.center,
               )),

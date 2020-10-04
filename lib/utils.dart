@@ -4,7 +4,7 @@ import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/enums.dart';
-import 'localization.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'widgets/menu_button.dart';
 
 class Utils {
@@ -72,7 +72,7 @@ class Utils {
     switch (type) {
       case ButtonType.newsletter:
         return MenuButton(
-          title: MyLocalizations.of(context).getString("newsletter"),
+          title: AppLocalizations.of(context).newsletter,
           action: () => Utils()
               .openLink(Utils().urlForButtonAction(ButtonType.newsletter)),
           iconWidget: Icon(Icons.email, color: Colors.white),
@@ -81,7 +81,7 @@ class Utils {
         break;
       case ButtonType.contribute:
         return MenuButton(
-            title: MyLocalizations.of(context).getString("contribute"),
+            title: AppLocalizations.of(context).contribute,
             action: () => Utils()
                 .openLink(Utils().urlForButtonAction(ButtonType.contribute)),
             iconWidget: Image.asset(
@@ -93,7 +93,7 @@ class Utils {
         break;
       case ButtonType.volunteer:
         return MenuButton(
-            title: MyLocalizations.of(context).getString("volunteerToSpeak"),
+            title: AppLocalizations.of(context).volunteerToSpeak,
             action: () => Utils()
                 .openLink(Utils().urlForButtonAction(ButtonType.volunteer)),
             iconWidget: Icon(Icons.record_voice_over, color: Colors.white),
@@ -101,7 +101,7 @@ class Utils {
         break;
       case ButtonType.videos:
         return MenuButton(
-            title: MyLocalizations.of(context).getString("videos"),
+            title: AppLocalizations.of(context).videos,
             action: () =>
                 Utils().openLink(Utils().urlForButtonAction(ButtonType.videos)),
             iconWidget: Icon(Icons.video_library, color: Colors.white),
@@ -109,7 +109,7 @@ class Utils {
         break;
       case ButtonType.social:
         return MenuButton(
-            title: MyLocalizations.of(context).getString("twitterHandle"),
+            title: AppLocalizations.of(context).twitterHandle,
             action: () =>
                 Utils().openLink(Utils().urlForButtonAction(ButtonType.social)),
             iconWidget: Image.asset(
@@ -120,7 +120,7 @@ class Utils {
             isForDrawer: isForDrawer);
       case ButtonType.about:
         return MenuButton(
-            title: MyLocalizations.of(context).getString("about"),
+            title: AppLocalizations.of(context).about,
             action: () => showAboutDialog(
                   context: context,
                   applicationIcon: Image(

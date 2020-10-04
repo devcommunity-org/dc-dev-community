@@ -1,0 +1,63 @@
+{
+  "@@locale": "en",
+  "pageTitle": "Dev Community",
+  "@pageTitle": {
+    "description": "App title"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About button text"
+  },
+  "volunteerToSpeak": "Volunteer to Speak",
+  "@volunteerToSpeak": {
+    "description": "Volunteer button text"
+  },
+  "contribute": "Contribute",
+  "@contribute": {
+    "description": "Contribute button text"
+  },
+  "homeBodyText": "Welcome to Dev Community! We are a family of meetups that span a wide variety of tech disciplines, including mobile, web, and cloud development. Check out our upcoming meetups, catch up on our previous recordings, and volunteer to speak - we are always looking for fresh faces and ideas!",
+  "@homeBodyText": {
+    "description": "Welcome text that goes under hero image"
+  },
+  "twitterHandle": "@DevCommunityOrg",
+  "@twitterHandle": {
+    "description": "Twitter account name"
+  },
+  "videos": "YouTube Channel",
+  "@videos": {
+    "description": "Videos button text"
+  },
+  "newsletter": "Newsletter",
+  "@newsletter": {
+    "description": "Newsletter button text"
+  },
+  "newsletterSignUp": "Sign up for our newsletter!",
+  "@newsletterSignUp": {
+    "description": "Call to action text for sign up for newsletter FAB"
+  },
+  "todayAt": "Today at",
+  "@todayAt": {
+    "description": "Meetup event text for when event is the current day"
+  },
+  "noEventsMessage": "Check back for more events coming soon. In the meantime, sign up for our newsletter. Or consider volunteering to speak!",
+  "@noEventsMessage": {
+    "description": "Placeholder text when no meetups are scheduled"
+  },
+  "upcomingEvents": "Upcoming Events",
+  "@upcomingEvents": {
+    "description": "Header for upcoming meetups widget"
+  },
+  "recentEventVideos": "Recent Videos",
+  "@recentEventVideos": {
+    "description": "Header for recorded videos widget"
+  },
+  "moreVideos": "More Videos",
+  "@moreVideos": {
+    "description": "Button text that links out to YouTube channel to view all our videos"
+  },
+  "noVideos": "No videos...",
+  "@noVideos": {
+    "description": "Placeholder text when no YouTube videos come back from API"
+  }
+}

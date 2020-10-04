@@ -1,4 +1,4 @@
-import 'package:dc_community_app/localization.dart';
+import 'package:dc_community_app/l10n/generated/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 
 class HeroWidget extends StatelessWidget {
@@ -14,7 +14,7 @@ class HeroWidget extends StatelessWidget {
                     image: AssetImage('assets/images/splash.jpg'),
                     fit: BoxFit.cover))),
       ),
-      Text(MyLocalizations.of(context).getString("homeBodyText"),
+      Text(AppLocalizations.of(context).homeBodyText,
           style: TextStyle(fontSize: 16.0))
     ]);
   }

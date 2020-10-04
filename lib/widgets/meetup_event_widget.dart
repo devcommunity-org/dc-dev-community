@@ -1,4 +1,5 @@
 import 'package:dc_community_app/constants.dart';
+import 'package:dc_community_app/l10n/generated/app_localizations.dart';
 import 'package:dc_community_app/model/meetup_event.dart';
 import 'package:dc_community_app/widgets/rounded_network_image_widget.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-import '../localization.dart';
 import '../utils.dart';
 
 class MeetupEventWidget extends StatelessWidget {
@@ -40,7 +40,7 @@ class MeetupEventWidget extends StatelessWidget {
                   maxLines: 2, overflow: TextOverflow.ellipsis),
               subtitle: Text(
                 meetupEvent.isToday
-                    ? MyLocalizations.of(context).getString("todayAt") +
+                    ? AppLocalizations.of(context).todayAt +
                         " " +
                         DateFormat("h:mm aa").format(meetupEvent.date)
                     : DateFormat("yMMMMEEEEd")

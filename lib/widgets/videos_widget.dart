@@ -1,5 +1,5 @@
 import 'package:dc_community_app/enums/enums.dart';
-import 'package:dc_community_app/localization.dart';
+import 'package:dc_community_app/l10n/generated/app_localizations.dart';
 import 'package:dc_community_app/model/meetup_event_video.dart';
 import 'package:dc_community_app/widgets/video_widget.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class VideosWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseWidget(builder: (context, sizingInformation) {
       if (videos == null || videos.length == 0) {
-        return Text(MyLocalizations.of(context).getString("noVideos"));
+        return Text(AppLocalizations.of(context).noVideos);
       } else {
         return Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
@@ -59,8 +59,7 @@ class VideosWidget extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                   padding: const EdgeInsets.all(10.0),
-                  child:
-                      Text(MyLocalizations.of(context).getString("moreVideos")))
+                  child: Text(AppLocalizations.of(context).moreVideos))
             ],
           ),
         );

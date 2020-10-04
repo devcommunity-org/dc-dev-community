@@ -1,6 +1,7 @@
 import 'package:async/async.dart';
 import 'package:dc_community_app/constants.dart';
 import 'package:dc_community_app/enums/enums.dart';
+import 'package:dc_community_app/l10n/generated/app_localizations.dart';
 import 'package:dc_community_app/model/aggregated_data_model.dart';
 import 'package:dc_community_app/model/meetup.dart';
 import 'package:dc_community_app/model/meetup_event.dart';
@@ -20,7 +21,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../integration_test_keys.dart';
-import '../localization.dart';
 import '../utils.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -107,13 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             }),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Utils().openLink(Utils().urlForButtonAction(ButtonType.newsletter));
-          },
-          icon: Icon(Icons.email),
-          label:
-              Text(MyLocalizations.of(context).getString("newsletterSignUp")),
-        ),
+            onPressed: () {
+              Utils()
+                  .openLink(Utils().urlForButtonAction(ButtonType.newsletter));
+            },
+            icon: Icon(Icons.email),
+            label: Text(AppLocalizations.of(context).newsletterSignUp)),
       );
     });
   }
@@ -175,7 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 HeroWidget(),
                 Padding(
                   padding: const EdgeInsets.only(top: padding, bottom: padding),
-                  child: HeaderWidget("recentEventVideos"),
+                  child: HeaderWidget(
+                      AppLocalizations.of(context).recentEventVideos),
                 ),
                 VideosWidget(dataModel.meetupEventVideos),
               ],
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(left: padding, right: padding),
             child: Column(
               children: [
-                HeaderWidget("upcomingEvents"),
+                HeaderWidget(AppLocalizations.of(context).upcomingEvents),
                 Container(
                     width: 500.0,
                     child: UpcomingEventsWidget(dataModel.meetupEvents)),
@@ -213,12 +213,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <int, Widget>{
                   MobileSegmentedControlMode.events.index: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text(MyLocalizations.of(context)
-                          .getString("upcomingEvents"))),
+                      child: Text(AppLocalizations.of(context).upcomingEvents)),
                   MobileSegmentedControlMode.videos.index: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text(MyLocalizations.of(context)
-                          .getString("recentEventVideos")))
+                      child:
+                          Text(AppLocalizations.of(context).recentEventVideos))
                 },
                 onValueChanged: (int value) {
                   setState(() {
