@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get pageTitle => 'Dev Community';
+  String get appTitle => 'Dev Community';
 
   @override
   String get about => 'About';
@@ -53,4 +53,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noVideos => 'No videos...';
+
+  @override
+  String get meetupEventSemanticHint => 'Press to view meetup details and RSVP';
+
+  @override
+  String get eventVideoSemanticHint => 'Press to watch video on YouTube';
+
+  @override
+  String get heroImageSemanticLabel => 'Photo of a meetup event';
+
+  @override
+  String get devCommunityLogoSemanticLabel => 'Dev Community logo';
+
+  @override
+  String get closeIconSemanticLabel => 'Close button';
+
+  @override
+  String get androidSummitAdSemanticLabel => 'Register for Android Summit on October 8th and 9th';
+
+  @override
+  String get androidSummitAdSemanticHint => 'Press to view Android Summit and register on Eventbrite';
 }

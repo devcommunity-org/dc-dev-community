@@ -44,10 +44,13 @@ class LogosWidget extends StatelessWidget {
       return isVertical
           ? Column(
               mainAxisAlignment: MainAxisAlignment.start, children: children)
-          : Marquee(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: children));
+          : ExcludeSemantics(
+              child: Marquee(
+                  //TODO: come up with an alternative way to show logos on a small screen - Marquee isn't accessible, and doesn't supprot tapping children widgets to link out to meetup.com
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: children)),
+            );
     });
   }
 }

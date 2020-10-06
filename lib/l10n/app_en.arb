@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "pageTitle": "Dev Community",
-  "@pageTitle": {
+  "appTitle": "Dev Community",
+  "@appTitle": {
     "description": "App title"
   },
   "about": "About",
@@ -59,5 +59,33 @@
   "noVideos": "No videos...",
   "@noVideos": {
     "description": "Placeholder text when no YouTube videos come back from API"
+  },
+  "meetupEventSemanticHint": "Press to view meetup details and RSVP",
+  "@meetupEventSemanticHint": {
+    "description": "Semantic hint for meetup card."
+  },
+  "eventVideoSemanticHint": "Press to watch video on YouTube",
+  "@eventVideoSemanticHint": {
+    "description": "Semantic hint for event video card."
+  },
+  "heroImageSemanticLabel": "Photo of a meetup event",
+  "@heroImageSemanticLabel": {
+    "description": "Semantic label for hero image."
+  },
+  "devCommunityLogoSemanticLabel": "Dev Community logo",
+  "@devCommunityLogoSemanticLabel": {
+    "description": "Semantic label for Dev Community logo."
+  },
+  "closeIconSemanticLabel": "Close button",
+  "@closeIconSemanticLabel": {
+    "description": "Semantic label for close icon on Android Summit advertisement."
+  },
+  "androidSummitAdSemanticLabel": "Register for Android Summit on October 8th and 9th",
+  "@androidSummitAdSemanticLabel": {
+    "description": "Semantic label for Android Summit advertisement."
+  },
+  "androidSummitAdSemanticHint": "Press to view Android Summit and register on Eventbrite",
+  "@androidSummitAdSemanticHint": {
+    "description": "Semantic hint for Android Summit advertisement."
   }
 }

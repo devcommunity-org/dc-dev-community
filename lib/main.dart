@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           accentColor: Constants.accentColor,
           fontFamily: Constants.fontFamily),
       onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context).pageTitle,
+          AppLocalizations.of(context).appTitle,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: HomeScreen(),

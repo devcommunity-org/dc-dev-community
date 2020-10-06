@@ -1,5 +1,5 @@
 name: dc_community_app
-description: A new Flutter application.
+description: An application for staying up on the latest events and video recordings from DevCommunity's family of meetups.
 version: 1.0.0+1
 
 environment:

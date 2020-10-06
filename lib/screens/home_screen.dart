@@ -55,9 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
       return Scaffold(
         backgroundColor: Color(0xfff6f6f6),
         appBar: AppBar(
-          title: Image.asset(
-            'assets/images/menu-bar-logo.png',
-            height: 42,
+          title: Semantics(
+            label: AppLocalizations.of(context).devCommunityLogoSemanticLabel,
+            child: Image.asset(
+              'assets/images/menu-bar-logo.png',
+              height: 42,
+            ),
           ),
           backgroundColor: Colors.black,
           actions: sizingInformation.isDesktop()
@@ -76,8 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         child: Center(
                           child: DrawerHeader(
-                            child: Image.asset(
-                              'assets/images/drawer-logo.png',
+                            child: Semantics(
+                              label: AppLocalizations.of(context)
+                                  .devCommunityLogoSemanticLabel,
+                              child: Image.asset(
+                                'assets/images/drawer-logo.png',
+                              ),
                             ),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -248,10 +255,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ImageDialog(
-              imagePath: "assets/images/android-summit-ad.png",
-              callToActionUrl:
-                  "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165?discount=DevCommunityOrgPromo2020");
+          return Semantics(
+            label: AppLocalizations.of(context).androidSummitAdSemanticLabel,
+            hint: AppLocalizations.of(context).androidSummitAdSemanticHint,
+            child: ImageDialog(
+                imagePath: "assets/images/android-summit-ad.png",
+                callToActionUrl:
+                    "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165?discount=DevCommunityOrgPromo2020"),
+          );
         });
   }
 }

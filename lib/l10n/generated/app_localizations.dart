@@ -95,7 +95,7 @@ abstract class AppLocalizations {
   ];
 
   // App title
-  String get pageTitle;
+  String get appTitle;
 
   // About button text
   String get about;
@@ -138,6 +138,27 @@ abstract class AppLocalizations {
 
   // Placeholder text when no YouTube videos come back from API
   String get noVideos;
+
+  // Semantic hint for meetup card.
+  String get meetupEventSemanticHint;
+
+  // Semantic hint for event video card.
+  String get eventVideoSemanticHint;
+
+  // Semantic label for hero image.
+  String get heroImageSemanticLabel;
+
+  // Semantic label for Dev Community logo.
+  String get devCommunityLogoSemanticLabel;
+
+  // Semantic label for close icon on Android Summit advertisement.
+  String get closeIconSemanticLabel;
+
+  // Semantic label for Android Summit advertisement.
+  String get androidSummitAdSemanticLabel;
+
+  // Semantic hint for Android Summit advertisement.
+  String get androidSummitAdSemanticHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
