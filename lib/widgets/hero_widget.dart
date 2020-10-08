@@ -1,4 +1,5 @@
 import 'package:dc_community_app/l10n/generated/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class HeroWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class HeroWidget extends StatelessWidget {
                       fit: BoxFit.cover))),
         ),
       ),
-      Text(AppLocalizations.of(context).homeBodyText,
+      SelectableText(AppLocalizations.of(context).homeBodyText,
           style: TextStyle(fontSize: 16.0))
     ]);
   }
