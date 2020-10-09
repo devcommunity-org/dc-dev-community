@@ -23,6 +23,10 @@ class SizingInformation {
     return deviceType == DeviceScreenType.mobile;
   }
 
+  bool isSmallMobile() {
+    return deviceType == DeviceScreenType.mobile && screenSize.width < 400;
+  }
+
   bool isTablet() {
     return deviceType == DeviceScreenType.tablet;
   }

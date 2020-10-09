@@ -143,28 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget content(SizingInformation sizingInformation) {
-    switch (sizingInformation.deviceType) {
-      case DeviceScreenType.desktop:
-        {
-          return desktopVersion();
-        }
-        break;
-
-      case DeviceScreenType.tablet:
-        {
-          return mobileVersion();
-        }
-        break;
-
-      case DeviceScreenType.mobile:
-        {
-          return mobileVersion();
-        }
-        break;
-
-      default:
-        return mobileVersion();
+    if (sizingInformation.deviceType == DeviceScreenType.desktop) {
+      return desktopVersion();
     }
+
+    return mobileVersion();
   }
 
   Widget desktopVersion() {

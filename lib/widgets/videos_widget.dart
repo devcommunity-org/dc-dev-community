@@ -26,8 +26,7 @@ class VideosWidget extends StatelessWidget {
             children: [
               LimitedBox(
                 maxHeight: 10000.0,
-                child: sizingInformation.isMobile() &&
-                        sizingInformation.screenSize.width < 400
+                child: sizingInformation.isSmallMobile()
                     ? ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
