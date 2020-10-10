@@ -1,3 +1,4 @@
+import 'package:dc_community_app/widgets/image_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
@@ -43,6 +44,24 @@ class Utils {
         launch(url);
       }
     }
+  }
+
+  Future<void> displayMarketingDialog(
+      BuildContext context,
+      String accessibilitylabel,
+      String accessibilityHint,
+      String imageName,
+      String url) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Semantics(
+            label: accessibilitylabel,
+            hint: accessibilityHint,
+            child: ImageDialog(
+                imagePath: "assets/images/" + imageName, callToActionUrl: url),
+          );
+        });
   }
 
   String urlForButtonAction(ButtonType buttonType) {

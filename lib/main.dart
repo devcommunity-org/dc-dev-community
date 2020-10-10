@@ -10,7 +10,8 @@ import 'l10n/generated/app_localizations.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: false, //!kReleaseMode,
+        enabled:
+            false, //!kReleaseMode, //flip this to demo DevicePreview plugin
         builder: (context) => MyApp(),
       ),
     );
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Constants.primaryColor,
-          accentColor: Constants.accentColor,
+          accentColor: Constants.accentColor, //flip this to demo hot reload
           fontFamily: Constants.fontFamily),
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,

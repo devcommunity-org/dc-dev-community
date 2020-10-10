@@ -10,7 +10,6 @@ import 'package:dc_community_app/sizing_information.dart';
 import 'package:dc_community_app/widgets/base_widget.dart';
 import 'package:dc_community_app/widgets/header_widget.dart';
 import 'package:dc_community_app/widgets/hero_widget.dart';
-import 'package:dc_community_app/widgets/image_dialog.dart';
 import 'package:dc_community_app/widgets/logos_widget.dart';
 import 'package:dc_community_app/widgets/menu_button.dart';
 import 'package:dc_community_app/widgets/upcoming_events_widget.dart';
@@ -43,8 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
     dataModel =
         AggregatedDataModel(meetups: meetups, meetupEvents: meetupEvents);
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _displayMarketingDialog(context));
+    //no marketing dialog, for now
+    // WidgetsBinding.instance.addPostFrameCallback((_) => Utils()
+    //     .displayMarketingDialog(
+    //         context,
+    //         AppLocalizations.of(context).androidSummitAdSemanticLabel,
+    //         AppLocalizations.of(context).androidSummitAdSemanticHint,
+    //         "android-summit-ad.png",
+    //         "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165?discount=DevCommunityOrgPromo2020"));
 
     super.initState();
   }
@@ -147,6 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
       return desktopVersion();
     }
 
+    //TODO: potentially better optimize for DeviceScreenType "tablet" one day...
+
     return mobileVersion();
   }
 
@@ -232,20 +239,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  Future<void> _displayMarketingDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Semantics(
-            label: AppLocalizations.of(context).androidSummitAdSemanticLabel,
-            hint: AppLocalizations.of(context).androidSummitAdSemanticHint,
-            child: ImageDialog(
-                imagePath: "assets/images/android-summit-ad.png",
-                callToActionUrl:
-                    "https://www.eventbrite.com/e/android-summit-2020-tickets-116528595165?discount=DevCommunityOrgPromo2020"),
-          );
-        });
   }
 }
