@@ -47,11 +47,11 @@ class UpcomingEventsWidget extends StatelessWidget {
                         );
                       }))
           : Container(
-              height: 290.0,
+              height: 150.0,
               child: Center(
                   child: Text(
                 AppLocalizations.of(context).noEventsMessage,
-                style: TextStyle(fontSize: 24.0, color: Colors.white),
+                style: TextStyle(fontSize: 20.0, color: Colors.black),
                 textAlign: TextAlign.center,
               )),
             );
